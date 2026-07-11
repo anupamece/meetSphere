@@ -21,7 +21,7 @@ const Navbar = ({ currentRole = 'attendee', onRoleChange }) => {
 
   const organizerLinks = [
     { label: 'Overview', href: '/overview' },
-    { label: 'Create Event', href: '/create-event' },
+    { label: 'Host Event', href: '/host-event' },
     { label: 'Manage Events', href: '/manage' },
     { label: 'Scan Tickets', href: '/scanner' }
   ];

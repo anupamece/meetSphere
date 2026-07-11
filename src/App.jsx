@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import { Route ,Routes,useLocation } from 'react-router-dom';
 import AuthForm from './components/AuthForm';
 import Home from './pages/homepage';
+import HostEvent from './pages/hosteventpage';
 const App = () => {
   const [role, setRole] = useState('attendee'); // State to manage the active user role
   const location = useLocation();
@@ -21,6 +22,7 @@ const App = () => {
 
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/host-event' element={<HostEvent />} />
         <Route path="/auth" element={<AuthForm />} />
       </Routes>
     </div>
