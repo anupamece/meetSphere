@@ -37,13 +37,11 @@ const AuthForm = ({ defaultMode = 'login', onSubmit }) => {
         data=await loginUser({
           email:formData.email,
           password:formData.password,
-          role:role,
-
         });
       }
       else{
         data=await registerUser({
-          name:formdData.name,
+          name:formData.name,
           email:formData.email,
           password:formData.password,
           role:role,
@@ -58,7 +56,8 @@ const AuthForm = ({ defaultMode = 'login', onSubmit }) => {
       navigate('/');
     }
     catch(error){
-      const message=error.response?.data?.message || 'Something went wrong';
+      const message=error.response?.data?.error ||
+      error.response?.data?.message || 'Something went wrong';
       dispatch(loginFailure({error:message}));
     }
     console.log('Form submitted:', { ...formData, role });
