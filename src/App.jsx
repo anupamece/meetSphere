@@ -1,16 +1,29 @@
-
-import React from 'react'
+import React, { useState } from 'react';
+import Navbar from './components/Navbar';
+import { Route ,Routes,useLocation } from 'react-router-dom';
+import AuthForm from './components/AuthForm';
 
 const App = () => {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-3xl font-bold text-gray-800">Welcome to </h1>
-      <img src="/Logos/logo.png" alt="Logo" className="w-32 h-32 mt-4" />
-      <p className="font-elegant text-2xl">this is a font</p>
-      <p className="font-display text-2xl">this is another font</p>
-      <p className="font-premium text-2xl">this is a third font</p>
-    </div>
-  )
-}
+  const [role, setRole] = useState('attendee'); // State to manage the active user role
+  const location = useLocation();
 
-export default App
+  const hideNavbar = location.pathname === '/auth'; // Hide Navbar on the auth page
+  return (
+    <div className="min-h-screen bg-brand-bg text-brand-dark">
+      {/* Rendering the Navbar component with dynamic role and login states */}
+      {!hideNavbar &&(
+        <Navbar 
+        currentRole={role} 
+        onRoleChange={setRole} 
+      />
+      )}
+      
+
+      <Routes>
+        <Route path="/auth" element={<AuthForm />} />
+      </Routes>
+    </div>
+  );
+};
+
+export default App;

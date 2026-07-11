@@ -1,24 +1,111 @@
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
-:root {
+@theme {
+  /* Brand colors */
+  --color-primary: #863bff;
+  --color-primary-hover: #7e14ff;
+  --color-secondary: #47bfff;
+  --color-brand-bg: #faf9ff;
+  --color-brand-dark: #0f172a;
+  --color-brand-muted: #ede6ff;
+  --color-brand-white: #ffffff;
+  
+  /* Brand fonts */
   --font-display: "Playfair Display", Georgia, serif;
   --font-elegant: "Cormorant Garamond", Georgia, serif;
   --font-premium: "Manrope", Arial, sans-serif;
 }
 
+/* Global body resets and base styles */
 body {
+  background-color: #faf9ff; /* fallback */
+  background-color: var(--color-brand-bg);
+  color: var(--color-brand-dark);
   font-family: var(--font-premium);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.font-display {
-  font-family: var(--font-display);
+/* Custom premium scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-.font-elegant {
-  font-family: var(--font-elegant);
+::-webkit-scrollbar-track {
+  background: var(--color-brand-bg);
 }
 
-.font-premium {
-  font-family: var(--font-premium);
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand-muted);
+  border-radius: 9999px;
+  border: 2px solid var(--color-brand-bg);
 }
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+/* Premium utility classes */
+
+/* Glassmorphism containers (for Navbar, widgets, modals) */
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(237, 230, 255, 0.4);
+}
+
+/* Glassmorphism for dark mode or contrast popups */
+.glassmorphism-dark {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Brand gradients */
+.gradient-brand {
+  background: linear-gradient(135deg, #863bff 0%, #47bfff 100%);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #863bff 0%, #47bfff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Smooth cubic hover animation for premium cards */
+.hover-premium {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-premium:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -15px rgba(134, 59, 255, 0.12);
+}
+
+/* Muted transition for standard buttons and inputs */
+.transition-premium {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Pulsing dot animation for live counter indicators */
+@keyframes pulse-soft {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.55;
+  }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
