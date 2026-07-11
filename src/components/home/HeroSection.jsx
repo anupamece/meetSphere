@@ -69,13 +69,13 @@ const HeroSection = () => {
           <circle cx="150" cy="350" r="4" fill="#9B7EBD" opacity="0.6" className="anim-glow" />
           <circle cx="300" cy="450" r="5" fill="#D4BEE4" opacity="0.8" />
           <circle cx="200" cy="600" r="4" fill="#9B7EBD" opacity="0.5" />
-          <circle cx="100" cy="200" r="6" fill="#3B1E54" opacity="0.4" />
+          <circle cx="100" cy="200" r="6" fill="#4A1E6D" opacity="0.4" />
 
           <defs>
             <linearGradient id="bgRayGrad" x1="1100" y1="400" x2="100" y2="300" gradientUnits="userSpaceOnUse">
               <stop offset="0%" stopColor="#9B7EBD" stopOpacity="0.8" />
               <stop offset="50%" stopColor="#D4BEE4" stopOpacity="0.4" />
-              <stop offset="100%" stopColor="#3B1E54" stopOpacity="0" />
+              <stop offset="100%" stopColor="#4A1E6D" stopOpacity="0" />
             </linearGradient>
           </defs>
         </svg>
@@ -87,17 +87,17 @@ const HeroSection = () => {
           
           {/* Left Column: Heading and Details */}
           <div className="lg:col-span-5 space-y-6 text-left">
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#D4BEE4]/50 border border-[#D4BEE4] text-[#3B1E54]">
+            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#D4BEE4]/50 border border-[#D4BEE4] text-[#4A1E6D]">
               <span className="h-2 w-2 rounded-full bg-[#9B7EBD] animate-pulse"></span>
               <span className="text-xs font-bold font-premium tracking-wide uppercase">All-In-One Event Platform</span>
             </div>
             
-            <h1 className="font-display text-5xl sm:text-6xl font-bold tracking-tight text-[#3B1E54] leading-tight">
+            <h1 className="font-display text-5xl sm:text-6xl font-bold tracking-tight text-[#4A1E6D] leading-tight">
               Connect Your <br />
               <span className="gradient-text">Event Sphere</span>
             </h1>
             
-            <p className="font-premium text-base sm:text-lg text-[#3B1E54]/80 leading-relaxed max-w-xl">
+            <p className="font-premium text-base sm:text-lg text-[#4A1E6D]/80 leading-relaxed max-w-xl">
               Host E-sports matches, concerts, workshops, and business conferences. Create customizable tickets, track dashboard sales, and scan passes securely at the gate.
             </p>
             
@@ -110,7 +110,7 @@ const HeroSection = () => {
               </a>
               <a 
                 href="#create-event" 
-                className="bg-white border-2 border-[#D4BEE4] text-[#3B1E54] hover:bg-[#D4BEE4]/20 hover:border-[#9B7EBD] font-premium font-semibold px-8 py-3.5 rounded-xl transition-premium text-center cursor-pointer"
+                className="bg-white border-2 border-[#D4BEE4] text-[#4A1E6D] hover:bg-[#D4BEE4]/20 hover:border-[#9B7EBD] font-premium font-semibold px-8 py-3.5 rounded-xl transition-premium text-center cursor-pointer"
               >
                 Post an Event
               </a>
@@ -119,16 +119,16 @@ const HeroSection = () => {
             {/* Quick Stats Grid */}
             <div className="grid grid-cols-3 gap-6 pt-8 border-t border-[#D4BEE4]/60 max-w-md">
               <div>
-                <p className="font-display text-3xl font-bold text-[#3B1E54]">12k+</p>
-                <p className="font-premium text-xs text-[#3B1E54]/60 mt-1">Active Events</p>
+                <p className="font-display text-3xl font-bold text-[#4A1E6D]">12k+</p>
+                <p className="font-premium text-xs text-[#4A1E6D]/60 mt-1">Active Events</p>
               </div>
               <div>
-                <p className="font-display text-3xl font-bold text-[#3B1E54]">450k+</p>
-                <p className="font-premium text-xs text-[#3B1E54]/60 mt-1">Attendees</p>
+                <p className="font-display text-3xl font-bold text-[#4A1E6D]">450k+</p>
+                <p className="font-premium text-xs text-[#4A1E6D]/60 mt-1">Attendees</p>
               </div>
               <div>
-                <p className="font-display text-3xl font-bold text-[#3B1E54]">99.9%</p>
-                <p className="font-premium text-xs text-[#3B1E54]/60 mt-1">Check-in Rate</p>
+                <p className="font-display text-3xl font-bold text-[#4A1E6D]">99.9%</p>
+                <p className="font-premium text-xs text-[#4A1E6D]/60 mt-1">Check-in Rate</p>
               </div>
             </div>
           </div>
@@ -148,7 +148,7 @@ const HeroSection = () => {
                 <defs>
                   <linearGradient id="mainSphereGrad" x1="300" y1="120" x2="300" y2="380" gradientUnits="userSpaceOnUse">
                     <stop offset="0%" stopColor="#9B7EBD" />
-                    <stop offset="100%" stopColor="#3B1E54" />
+                    <stop offset="100%" stopColor="#4A1E6D" />
                   </linearGradient>
                   
                   <linearGradient id="glowColor" x1="0" y1="0" x2="1" y2="1">
@@ -157,7 +157,7 @@ const HeroSection = () => {
                   </linearGradient>
 
                   <linearGradient id="nodeTextGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#3B1E54" />
+                    <stop offset="0%" stopColor="#4A1E6D" />
                     <stop offset="100%" stopColor="#5C3B76" />
                   </linearGradient>
                   
@@ -181,7 +181,7 @@ const HeroSection = () => {
                   {/* Inner ring */}
                   <ellipse cx="300" cy="250" rx="140" ry="60" stroke="#D4BEE4" strokeWidth="2" strokeDasharray="10 12" />
                   <circle cx="160" cy="250" r="6" fill="#9B7EBD" />
-                  <circle cx="440" cy="250" r="6" fill="#3B1E54" />
+                  <circle cx="440" cy="250" r="6" fill="#4A1E6D" />
                 </g>
 
                 <g className="anim-spin-ccw">
@@ -194,7 +194,7 @@ const HeroSection = () => {
                 {/* ─── Central Holographic Sphere (meetSphere) ─── */}
                 <g className="anim-glow">
                   {/* Sphere Shadow base */}
-                  <ellipse cx="300" cy="285" rx="80" ry="25" fill="#3B1E54" opacity="0.15" />
+                  <ellipse cx="300" cy="285" rx="80" ry="25" fill="#4A1E6D" opacity="0.15" />
                   
                   {/* Main glowing sphere body */}
                   <circle cx="300" cy="250" r="65" fill="url(#mainSphereGrad)" />
@@ -209,15 +209,15 @@ const HeroSection = () => {
                   {/* Card Background */}
                   <rect x="50" y="50" width="150" height="90" rx="16" fill="#FFFFFF" stroke="#D4BEE4" strokeWidth="1.5" />
                   {/* Header Badge */}
-                  <rect x="62" y="62" width="55" height="18" rx="6" fill="#3B1E54" />
+                  <rect x="62" y="62" width="55" height="18" rx="6" fill="#4A1E6D" />
                   <text x="90" y="74" fill="#FFFFFF" fontSize="9" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">ESPORTS</text>
                   
                   {/* Controller Icon SVG Inline */}
                   <path d="M 68 95 C 68 90, 78 88, 86 88 C 94 88, 104 90, 104 95 C 104 102, 94 104, 86 104 C 78 104, 68 102, 68 95 Z" fill="#D4BEE4" opacity="0.7" />
-                  <rect x="74" y="93" width="10" height="4" rx="1" fill="#3B1E54" />
-                  <rect x="77" y="90" width="4" height="10" rx="1" fill="#3B1E54" />
-                  <circle cx="94" cy="93" r="2" fill="#3B1E54" />
-                  <circle cx="98" cy="97" r="2" fill="#3B1E54" />
+                  <rect x="74" y="93" width="10" height="4" rx="1" fill="#4A1E6D" />
+                  <rect x="77" y="90" width="4" height="10" rx="1" fill="#4A1E6D" />
+                  <circle cx="94" cy="93" r="2" fill="#4A1E6D" />
+                  <circle cx="98" cy="97" r="2" fill="#4A1E6D" />
 
                   {/* Text details */}
                   <text x="65" y="122" fill="url(#nodeTextGrad)" fontSize="9" fontWeight="bold" fontFamily="sans-serif">Championship finals</text>
@@ -232,9 +232,9 @@ const HeroSection = () => {
                   <text x="437" y="84" fill="#FFFFFF" fontSize="9" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">CONCERT</text>
                   
                   {/* Music Note Icon SVG Inline */}
-                  <circle cx="425" cy="110" r="6" fill="#3B1E54" />
-                  <circle cx="438" cy="106" r="6" fill="#3B1E54" />
-                  <path d="M 431 110 L 431 96 L 444 92 L 444 106" stroke="#3B1E54" strokeWidth="3" strokeLinecap="round" />
+                  <circle cx="425" cy="110" r="6" fill="#4A1E6D" />
+                  <circle cx="438" cy="106" r="6" fill="#4A1E6D" />
+                  <path d="M 431 110 L 431 96 L 444 92 L 444 106" stroke="#4A1E6D" strokeWidth="3" strokeLinecap="round" />
                   <path d="M 431 98 L 444 94" stroke="#9B7EBD" strokeWidth="4" strokeLinecap="round" />
 
                   {/* Text Details */}
@@ -249,15 +249,15 @@ const HeroSection = () => {
                   
                   {/* Stylized Ticket Pass */}
                   <g>
-                    <rect x="55" y="340" width="80" height="70" rx="8" fill="#3B1E54" />
+                    <rect x="55" y="340" width="80" height="70" rx="8" fill="#4A1E6D" />
                     
                     {/* Ticket dotted divider line */}
                     <line x1="55" y1="385" x2="135" y2="385" stroke="#D4BEE4" strokeWidth="2" strokeDasharray="4 4" />
                     
                     {/* Dynamic QR Grid Mockup */}
                     <rect x="65" y="350" width="24" height="24" rx="2" fill="#FFFFFF" />
-                    <rect x="68" y="353" width="7" height="7" fill="#3B1E54" />
-                    <rect x="80" y="363" width="6" height="6" fill="#3B1E54" />
+                    <rect x="68" y="353" width="7" height="7" fill="#4A1E6D" />
+                    <rect x="80" y="363" width="6" height="6" fill="#4A1E6D" />
                     <rect x="68" y="365" width="4" height="4" fill="#9B7EBD" />
 
                     {/* Ticket Text */}
@@ -284,17 +284,17 @@ const HeroSection = () => {
                   <rect x="390" y="310" width="160" height="110" rx="16" fill="#FFFFFF" stroke="#D4BEE4" strokeWidth="1.5" />
                   
                   {/* Header */}
-                  <text x="405" y="332" fill="#3B1E54" fontSize="10" fontWeight="bold" fontFamily="sans-serif">Registration Stats</text>
+                  <text x="405" y="332" fill="#4A1E6D" fontSize="10" fontWeight="bold" fontFamily="sans-serif">Registration Stats</text>
                   
                   {/* Bar Graph Illustration */}
                   <rect x="405" y="375" width="12" height="25" rx="2" fill="#D4BEE4" />
                   <rect x="423" y="360" width="12" height="40" rx="2" fill="#9B7EBD" />
-                  <rect x="441" y="350" width="12" height="50" rx="2" fill="#3B1E54" />
+                  <rect x="441" y="350" width="12" height="50" rx="2" fill="#4A1E6D" />
                   <rect x="459" y="365" width="12" height="35" rx="2" fill="#9B7EBD" />
 
                   {/* Attendee Count Badge */}
                   <rect x="480" y="362" width="58" height="28" rx="8" fill="#EEEEEE" />
-                  <text x="509" y="375" fill="#3B1E54" fontSize="9" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">Capacity</text>
+                  <text x="509" y="375" fill="#4A1E6D" fontSize="9" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">Capacity</text>
                   <text x="509" y="386" fill="#9B7EBD" fontSize="8" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">88% Full</text>
                 </g>
 

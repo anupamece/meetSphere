@@ -5,9 +5,9 @@
   /* Brand colors */
   --color-primary: #9B7EBD;
   --color-primary-hover: #80639E;
-  --color-secondary: #3B1E54;
+  --color-secondary: #4A1E6D;
   --color-brand-bg: #EEEEEE;
-  --color-brand-dark: #3B1E54;
+  --color-brand-dark: #4A1E6D;
   --color-brand-muted: #D4BEE4;
   --color-brand-white: #ffffff;
   
@@ -60,7 +60,7 @@ body {
 
 /* Glassmorphism for dark mode or contrast popups */
 .glassmorphism-dark {
-  background: rgba(59, 30, 84, 0.8);
+  background: rgba(74, 30, 109, 0.8);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -68,11 +68,11 @@ body {
 
 /* Brand gradients */
 .gradient-brand {
-  background: linear-gradient(135deg, #3B1E54 0%, #9B7EBD 100%);
+  background: linear-gradient(135deg, #4A1E6D 0%, #9B7EBD 100%);
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #3B1E54 0%, #9B7EBD 100%);
+  background: linear-gradient(135deg, #4A1E6D 0%, #9B7EBD 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

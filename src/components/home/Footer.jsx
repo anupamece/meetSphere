@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#3B1E54] text-[#EEEEEE] pt-16 pb-8 border-t border-[#3B1E54]">
+    <footer className="bg-[#4A1E6D] text-[#EEEEEE] pt-16 pb-8 border-t border-[#4A1E6D]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Footer Top Grid */}
@@ -55,7 +55,7 @@ const Footer = () => {
               <input 
                 type="email" 
                 placeholder="Enter email address" 
-                className="px-4 py-2.5 bg-[#EEEEEE] text-[#3B1E54] border border-[#D4BEE4]/40 rounded-xl font-premium text-sm w-full focus:outline-none focus:ring-2 focus:ring-[#9B7EBD]"
+                className="px-4 py-2.5 bg-[#EEEEEE] text-[#4A1E6D] border border-[#D4BEE4]/40 rounded-xl font-premium text-sm w-full focus:outline-none focus:ring-2 focus:ring-[#9B7EBD]"
               />
               <button 
                 type="submit" 

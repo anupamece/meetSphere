@@ -41,15 +41,15 @@ const FeaturesSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-white border-y border-[#D4BEE4]/50">
+    <section className="py-20 bg-[#EEEEEE] border-b border-[#D4BEE4]/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <h2 className="font-display text-4xl font-bold tracking-tight text-[#3B1E54]">
+          <h2 className="font-display text-4xl font-bold tracking-tight text-[#4A1E6D]">
             Everything You Need to Host or Attend
           </h2>
-          <p className="font-premium text-base text-[#3B1E54]/75 max-w-xl mx-auto leading-relaxed">
+          <p className="font-premium text-base text-[#4A1E6D]/75 max-w-xl mx-auto leading-relaxed">
             meetSphere provides a full suite of event management and booking features, eliminating security issues and payment delays.
           </p>
         </div>
@@ -59,14 +59,14 @@ const FeaturesSection = () => {
           {features.map((feature, idx) => (
             <div 
               key={idx} 
-              className="hover-premium bg-[#EEEEEE]/40 p-8 rounded-2xl border border-[#D4BEE4]/60 flex flex-col justify-between h-full group transition-all duration-300"
+              className="hover-premium bg-white/50 backdrop-blur-sm p-8 rounded-2xl border border-[#D4BEE4]/60 flex flex-col justify-between h-full group hover:bg-white hover:border-[#9B7EBD] hover:shadow-lg hover:shadow-[#9B7EBD]/10 transition-all duration-300"
             >
               <div className="space-y-4">
-                <div className="inline-flex p-3 bg-white rounded-xl border border-[#D4BEE4]/50 shadow-sm text-primary group-hover:scale-110 transition-transform duration-300">
+                <div className="inline-flex p-3 bg-[#EEEEEE]/50 rounded-xl border border-[#D4BEE4]/45 text-primary group-hover:scale-110 group-hover:bg-[#D4BEE4]/30 transition-all duration-300">
                   {feature.icon}
                 </div>
-                <h3 className="font-premium font-bold text-lg text-[#3B1E54]">{feature.title}</h3>
-                <p className="font-premium text-sm text-[#3B1E54]/70 leading-relaxed">{feature.description}</p>
+                <h3 className="font-premium font-bold text-lg text-[#4A1E6D]">{feature.title}</h3>
+                <p className="font-premium text-sm text-[#4A1E6D]/70 leading-relaxed">{feature.description}</p>
               </div>
             </div>
           ))}
