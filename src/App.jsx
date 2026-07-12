@@ -4,6 +4,7 @@ import { Route ,Routes,useLocation } from 'react-router-dom';
 import AuthForm from './components/AuthForm';
 import Home from './pages/homepage';
 import HostEvent from './pages/hosteventpage';
+import ExploreEvents from './pages/ExploreEvents';
 const App = () => {
   const [role, setRole] = useState('attendee'); // State to manage the active user role
   const location = useLocation();
@@ -22,6 +23,7 @@ const App = () => {
 
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/explore' element={<ExploreEvents />} />
         <Route path='/host-event' element={<HostEvent />} />
         <Route path="/auth" element={<AuthForm />} />
       </Routes>
