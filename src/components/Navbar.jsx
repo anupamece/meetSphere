@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Link ,NavLink} from 'react-router-dom';
+import React, { useState,useRef,useEffect } from 'react';
+import { Link ,useNavigate,NavLink} from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../redux/authSlice';
 
-const Navbar = ({ currentRole = 'attendee', onRoleChange }) => {
+const Navbar = ({ currentRole}) => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
 
@@ -11,7 +11,12 @@ const Navbar = ({ currentRole = 'attendee', onRoleChange }) => {
   const [isOpen, setIsOpen] = useState(false); // Mobile menu state
   const [profileOpen, setProfileOpen] = useState(false); // Profile dropdown state
 
-  const isAttendee = currentRole === 'attendee';
+  // const isAttendee = currentRole === 'attendee';
+
+  const user = JSON.parse(localStorage.getItem('user'))||null;
+  const userName = user?.name || '';
+  const userEmail = user?.email || '';
+  const navigate=useNavigate();
 
   const attendeeLinks = [
     { label: 'Explore Events', href: '/explore' },
@@ -26,8 +31,23 @@ const Navbar = ({ currentRole = 'attendee', onRoleChange }) => {
     { label: 'Scan Tickets', href: '/scanner' }
   ];
 
-  const links = isAttendee ? attendeeLinks : organizerLinks;
+  const links = (currentRole==='attendee') ? attendeeLinks : organizerLinks;
 
+
+  const profileOpenRef=useRef(null);
+  useEffect(()=>{
+    const handleClickOut=(e)=>{
+      if(profileOpenRef.current &&
+        !profileOpenRef.current.contains(e.target)){
+        setProfileOpen(false);
+      }
+    };
+    document.addEventListener('mousedown',handleClickOut);
+
+    return ()=>{
+      document.removeEventListener('mousedown',handleClickOut);
+    };
+  },[]);
   return (
     <nav className="glassmorphism sticky top-0 z-50 w-full transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -72,38 +92,15 @@ const Navbar = ({ currentRole = 'attendee', onRoleChange }) => {
             ))}
           </div>
 
-          {/* Right Side: Role Toggle, Profile & Mobile Menu Toggle */}
           <div className="flex items-center space-x-4">
             
             {/* Custom Interactive Role Toggler Switch */}
-            <div className="relative bg-slate-100 p-1 rounded-full flex items-center w-36 sm:w-40 border border-slate-200 shadow-inner">
-              <div 
-                className={`absolute top-1 bottom-1 rounded-full transition-all duration-300 ease-out shadow-sm w-[70px] sm:w-[76px] ${
-                  isAttendee 
-                    ? 'left-1 bg-secondary' 
-                    : 'left-[calc(100%-74px)] sm:left-[calc(100%-80px)] bg-primary'
-                }`}
-              ></div>
-              <button 
-                onClick={() => onRoleChange('attendee')}
-                className={`z-10 w-1/2 text-[10px] sm:text-xs font-bold font-premium text-center cursor-pointer transition-all duration-200 ${
-                  isAttendee ? 'text-white' : 'text-slate-500 hover:text-slate-800'
-                }`}
-              >
-                Attendee
-              </button>
-              <button 
-                onClick={() => onRoleChange('organizer')}
-                className={`z-10 w-1/2 text-[10px] sm:text-xs font-bold font-premium text-center cursor-pointer transition-all duration-200 ${
-                  !isAttendee ? 'text-white' : 'text-slate-500 hover:text-slate-800'
-                }`}
-              >
-                Organizer
-              </button>
+            <div>
+              <span>{currentRole === 'organizer' ? 'Organizer' : 'Attendee'}</span>
             </div>
 
             {/* User Profile Dropdown Placeholder */}
-            <div className="relative">
+            <div className="relative" ref={profileOpenRef}>
               <button 
                 onClick={() => setProfileOpen(!profileOpen)}
                 className="relative flex items-center justify-center focus:outline-none cursor-pointer group rounded-full"
@@ -120,21 +117,15 @@ const Navbar = ({ currentRole = 'attendee', onRoleChange }) => {
                   <div className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9">
                     {/* Ring glow background (Primary for Organizer, Secondary for Attendee) */}
                     <div className={`absolute -inset-0.5 rounded-full blur-[3px] opacity-75 group-hover:opacity-100 transition-premium ${
-                      isAttendee ? 'bg-secondary' : 'bg-primary'
+                     'bg-primary'
                     }`}></div>
                     
                     {/* Main Image */}
                     <img 
-                      src={isAttendee 
-                        ? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-                        : 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-                      } 
+                      src="/default-avatar.png"
                       alt="User profile" 
                       className="relative w-full h-full rounded-full object-cover border-2 border-white shadow-sm"
                     />
-                    
-                    {/* Live Online Badge */}
-                    <span className="absolute -bottom-0.5 -right-0.5 block h-2.5 w-2.5 rounded-full ring-2 ring-white bg-emerald-500 animate-pulse-soft"></span>
                   </div>
                 )}
               </button>
@@ -144,14 +135,14 @@ const Navbar = ({ currentRole = 'attendee', onRoleChange }) => {
                 <div  className="absolute right-0 mt-3 w-52 rounded-2xl bg-white border border-brand-muted shadow-xl py-2 z-50 animate-fade-in font-premium text-sm text-slate-700">
                   <div className="px-4 py-2 border-b border-brand-muted">
                     <p className="font-bold text-slate-800">
-                      {isAttendee ? 'Sarah Jenkins' : 'Alex Mercer'}
+                      {userName}
                     </p>
                     <p className="text-xs text-slate-400 truncate">
-                      {isAttendee ? 'sarah.j@example.com' : 'alex.m@events.com'}
+                      {userEmail}
                     </p>
                   </div>
                   <div className="py-1" onClick={()=>setProfileOpen(!profileOpen)}>
-                    <a href="#profile" className="block px-4 py-2 hover:bg-brand-bg hover:text-primary transition-premium">
+                    <a href="/profile" className="block px-4 py-2 hover:bg-brand-bg hover:text-primary transition-premium">
                       My Profile
                     </a>
                     <a href="#settings" className="block px-4 py-2 hover:bg-brand-bg hover:text-primary transition-premium">
@@ -159,9 +150,17 @@ const Navbar = ({ currentRole = 'attendee', onRoleChange }) => {
                     </a>
                   </div>
                   <div className="border-t border-brand-muted py-1" onClick={()=>setProfileOpen(!profileOpen)}>
-                    <a  onClick={() => dispatch(logout())} href="#logout" className="block px-4 py-2 text-rose-500 hover:bg-rose-50 hover:font-bold transition-premium">
+                    <button  onClick={() => {
+                        const confirm=window.confirm("Are you sure you want to Logout ?");
+                        if(confirm){
+                          dispatch(logout());
+                          setProfileOpen(false);
+                          navigate('/auth')
+                        }
+                      }}  
+                      className="block px-4 py-2 text-rose-500 hover:bg-rose-50 hover:font-bold transition-premium">
                       Log Out
-                    </a>
+                    </button>
                   </div>
                 </div>
               )}

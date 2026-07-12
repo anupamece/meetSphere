@@ -4,8 +4,16 @@ import { Route ,Routes,useLocation } from 'react-router-dom';
 import AuthForm from './components/AuthForm';
 import Home from './pages/homepage';
 import HostEvent from './pages/hosteventpage';
+import { useSelector } from 'react-redux';
+import ProfilePage from './pages/profilePage';
+
+// const user=JSON.parse(localStorage.getItem('user'));
 const App = () => {
-  const [role, setRole] = useState('attendee'); // State to manage the active user role
+  const user=useSelector((state)=>state.auth.user);
+  const role=user?.role || 'attendee'
+
+  
+  
   const location = useLocation();
 
   const hideNavbar = location.pathname === '/auth'; // Hide Navbar on the auth page
@@ -14,8 +22,7 @@ const App = () => {
       {/* Rendering the Navbar component with dynamic role and login states */}
       {!hideNavbar &&(
         <Navbar 
-        currentRole={role} 
-        onRoleChange={setRole} 
+        currentRole={role}
       />
       )}
       
@@ -24,6 +31,7 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/host-event' element={<HostEvent />} />
         <Route path="/auth" element={<AuthForm />} />
+        <Route path='/profile' element={<ProfilePage/>}/>
       </Routes>
     </div>
   );
