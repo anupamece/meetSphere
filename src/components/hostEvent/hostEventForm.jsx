@@ -106,7 +106,7 @@ const HostEventForm = () => {
             }
             const data= await createEvent(eventData);
             console.log('Event created successfully:', data);
-            navigate('/'); // Redirect to home or events page after successful creation
+            navigate('/explore'); // Redirect to the live events list after successful creation
         }
         catch(err){
             const message =

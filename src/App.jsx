@@ -4,6 +4,7 @@ import { Route ,Routes,useLocation } from 'react-router-dom';
 import AuthForm from './components/AuthForm';
 import Home from './pages/homepage';
 import HostEvent from './pages/hosteventpage';
+import ExploreEvents from './pages/ExploreEvents';
 import { useSelector } from 'react-redux';
 import ProfilePage from './pages/profilePage';
 
@@ -29,6 +30,7 @@ const App = () => {
 
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/explore' element={<ExploreEvents />} />
         <Route path='/host-event' element={<HostEvent />} />
         <Route path="/auth" element={<AuthForm />} />
         <Route path='/profile' element={<ProfilePage/>}/>

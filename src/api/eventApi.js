@@ -6,7 +6,7 @@ export const createEvent= async(eventData)=>{
     return response.data;
 }
 
-export const getEvents= async()=>{
+export const getEvents = async () => {
     const response = await API.get('/events/getEvents');
     return response.data;
 }
