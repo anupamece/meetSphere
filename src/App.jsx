@@ -7,19 +7,23 @@ import HostEvent from './pages/hosteventpage';
 import ExploreEvents from './pages/ExploreEvents';
 import { useSelector } from 'react-redux';
 import ProfilePage from './pages/profilePage';
+import ManageEvents from './pages/manageHostEventPage';
+
 
 // const user=JSON.parse(localStorage.getItem('user'));
 const App = () => {
   const user=useSelector((state)=>state.auth.user);
   const role=user?.role || 'attendee'
-
+  // const [loading,setLoading]=useState(true);
   
   
   const location = useLocation();
 
   const hideNavbar = location.pathname === '/auth'; // Hide Navbar on the auth page
   return (
+    
     <div className="min-h-screen bg-brand-bg text-brand-dark">
+      
       {/* Rendering the Navbar component with dynamic role and login states */}
       {!hideNavbar &&(
         <Navbar 
@@ -34,6 +38,7 @@ const App = () => {
         <Route path='/host-event' element={<HostEvent />} />
         <Route path="/auth" element={<AuthForm />} />
         <Route path='/profile' element={<ProfilePage/>}/>
+        <Route path='/manage' element={<ManageEvents/>}/>
       </Routes>
     </div>
   );

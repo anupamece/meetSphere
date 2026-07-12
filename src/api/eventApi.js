@@ -10,3 +10,7 @@ export const getEvents = async () => {
     const response = await API.get('/events/getEvents');
     return response.data;
 }
+export const getOrganiserEvents = async ()=>{
+    const response=await API.get(`events/my-events`);
+    return response.data;
+}

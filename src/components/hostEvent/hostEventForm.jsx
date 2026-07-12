@@ -2,6 +2,7 @@ import React from 'react'
 import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import { createEvent } from '../../api/eventApi';
+import LoadingSpinner from '../LoadingSpinner';
 
 const HostEventForm = () => {
     const categories = [
@@ -123,6 +124,7 @@ const HostEventForm = () => {
 
     return (
     <div className="max-w-3xl mx-auto px-4 py-12">
+      {loading && <LoadingSpinner fullPage={true} message="Publishing your event..." />}
       <div className="bg-white/60 backdrop-blur-sm rounded-3xl border border-[#D4BEE4]/60 p-8 sm:p-10 shadow-sm">
 
         {/* Form Header */}

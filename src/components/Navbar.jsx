@@ -25,7 +25,7 @@ const Navbar = ({ currentRole}) => {
   ];
 
   const organizerLinks = [
-    { label: 'Overview', href: '/overview' },
+    { label: 'Overview', href: '/explore' },
     { label: 'Host Event', href: '/host-event' },
     { label: 'Manage Events', href: '/manage' },
     { label: 'Scan Tickets', href: '/scanner' }
@@ -54,21 +54,16 @@ const Navbar = ({ currentRole}) => {
         <div className="flex items-center justify-between h-16 sm:h-20">
           
           {/* Logo & Brand */}
-          <div className="flex items-center space-x-3 cursor-pointer">
-            <div className="relative group">
-              <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-primary to-secondary opacity-75 blur-sm group-hover:opacity-100 transition duration-300"></div>
-              <Link to="/" className="relative flex items-center space-x-2 px-3 py-2 rounded-xl bg-white border border-brand-muted shadow-sm hover:shadow-md transition-premium">
-                <img 
-                    src="/Logos/favicon.png" 
-                    alt="meetSphere Logo" 
-                    className="relative w-9 h-9 sm:w-10 sm:h-10 object-contain rounded-lg bg-white p-1"
-                />
-              </Link>
-            </div>
-            <span className="font-display text-xl sm:text-2xl font-bold tracking-tight bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+          <Link to="/" className="flex items-center space-x-2.5 cursor-pointer group">
+            <img 
+              src="/Logos/favicon.png" 
+              alt="meetSphere Logo" 
+              className="w-10 h-10 sm:w-11 sm:h-11 object-contain"
+            />
+            <span className="font-display text-xl sm:text-2xl font-bold tracking-tight bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent group-hover:from-primary-hover group-hover:to-primary-hover transition-all duration-300">
               meetSphere
             </span>
-          </div>
+          </Link>
 
           {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
