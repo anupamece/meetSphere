@@ -1,6 +1,7 @@
 import React from 'react';
 
 const EventCard = ({ event,showActions=false,onDelete,onEdit }) => {
+  
   const startLabel = event.startDateTime
     ? new Date(event.startDateTime).toLocaleString(undefined, {
         dateStyle: 'medium',
@@ -13,6 +14,7 @@ const EventCard = ({ event,showActions=false,onDelete,onEdit }) => {
     .join(' • ');
 
   const tags = Array.isArray(event.tags) ? event.tags : [];
+  
 
   return (
     <article
