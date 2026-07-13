@@ -20,7 +20,7 @@ const Navbar = ({ currentRole}) => {
 
   const attendeeLinks = [
     { label: 'Explore Events', href: '/explore' },
-    { label: 'Saved Events', href: '/saved' },
+    { label: 'Favorite Events', href: '/saved' },
     { label: 'My Tickets', href: '/tickets' }
   ];
 

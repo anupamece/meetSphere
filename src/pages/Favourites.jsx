@@ -1,96 +1,74 @@
 import React, { useEffect, useMemo, useState } from 'react';
-<<<<<<< HEAD
-import { getEvents } from '../api/eventApi';
-import EventCard from '../components/EventCard';
-import LoadingSpinner from '../components/LoadingSpinner';
-=======
 import { Heart } from 'lucide-react';
-import { getEvents , isfav } from '../api/eventApi';
->>>>>>> f2db9c9 (front fav)
+import { favEvents } from '../api/favApi';
 
-const ExploreEvents = () => {
-	const [events, setEvents] = useState([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState('');
-<<<<<<< HEAD
+const Favourites = () => {
+	const [favorites, setFavorites] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-=======
-  const [favoriteEvents, setFavoriteEvents] = useState({});
-  
-  
->>>>>>> f2db9c9 (front fav)
-	useEffect(() => {
+  useEffect(() => {
     let isActive = true;
-    
-		const loadEvents = async () => {
+
+    const loadFavoriteEvents = async () => {
       try {
         setLoading(true);
-				setError('');
-				const data = await getEvents();
-				if (!isActive) {
+        setError('');
+        const data = await favEvents();
+        if (!isActive) {
           return;
-				}
-				setEvents(Array.isArray(data.events) ? data.events : []);
+        }
+				setFavorites(Array.isArray(data.fav) ? data.fav : []);
 			} catch (err) {
         if (!isActive) {
           return;
-				}
-				setError(err.response?.data?.message || 'Failed to load events.');
-			} finally {
+        }
+				setError(err.response?.data?.message || 'Failed to load favorite events.');
+      } finally {
         if (isActive) {
           setLoading(false);
-				}
-			}
+        }
+      }
 		};
-    
-		loadEvents();
-    
+
+		loadFavoriteEvents();
+
 		return () => {
-      isActive = false;
+			isActive = false;
 		};
 	}, []);
 
-<<<<<<< HEAD
-=======
-	const toggleFavorite = async (eventId) => {
-		try {
-			const response = await isfav(eventId);
-			setFavoriteEvents((currentFavorites) => ({
-				...currentFavorites,
-				[eventId]: response.isfavorite,
-			}));
-		} catch (err) {
-			setError(err.response?.data?.message || 'Failed to update favorite.');
-		}
-	};
->>>>>>> f2db9c9 (front fav)
-	const sortedEvents = useMemo(
-		() => [...events].sort((left, right) => new Date(right.createdAt) - new Date(left.createdAt)),
-		[events],
+	const favoriteEvents = useMemo(
+		() => favorites
+			.map((item) => item.event)
+			.filter(Boolean)
+			.sort((left, right) => new Date(right.createdAt) - new Date(left.createdAt)),
+		[favorites],
 	);
 
-	return (
+  return (
 		<main className="relative overflow-hidden bg-brand-bg">
 			<div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top,_rgba(155,126,189,0.22),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(74,30,109,0.12),_transparent_28%)]" />
 
 			<section className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
 				<div className="max-w-3xl">
 					<p className="font-premium text-xs font-bold uppercase tracking-[0.35em] text-primary">
-						Live Events
+						Favorite Events
 					</p>
 					<h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-brand-dark sm:text-5xl">
-						Explore events from the database.
+						Your saved events.
 					</h1>
 					<p className="mt-4 max-w-2xl text-sm leading-6 text-brand-dark/70 sm:text-base">
-						This page pulls the stored event records directly from your backend and renders the
-						current listings, including title, venue, timing, and status.
+						This page shows only the events you marked as favorite from your current account.
 					</p>
 				</div>
 
 				<div className="mt-10">
 					{loading && (
-						<div className="flex justify-center py-16">
-							<LoadingSpinner message="Loading events from the database..." />
+						<div className="rounded-3xl border border-brand-muted/60 bg-white/70 p-8 text-center shadow-sm backdrop-blur-sm">
+							<p className="font-premium text-sm font-semibold text-brand-dark/70">
+								Loading events from the database...
+							</p>
 						</div>
 					)}
 
@@ -100,25 +78,20 @@ const ExploreEvents = () => {
 						</div>
 					)}
 
-					{!loading && !error && sortedEvents.length === 0 && (
+					{!loading && !error && favoriteEvents.length === 0 && (
 						<div className="rounded-3xl border border-dashed border-brand-muted/80 bg-white/70 p-10 text-center shadow-sm backdrop-blur-sm">
 							<p className="font-display text-2xl font-semibold text-brand-dark">
-								No events yet.
+								No favorite events yet.
 							</p>
 							<p className="mt-2 text-sm text-brand-dark/65">
-								Create an event from the host form and it will appear here.
+								Tap the heart on an event to save it here.
 							</p>
 						</div>
 					)}
 
-					{!loading && !error && sortedEvents.length > 0 && (
+					{!loading && !error && favoriteEvents.length > 0 && (
 						<div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-<<<<<<< HEAD
-							{sortedEvents.map((event) => (
-								<EventCard key={event._id} event={event} />
-							))}
-=======
-							{sortedEvents.map((event) => {
+							{favoriteEvents.map((event) => {
 								const startLabel = event.startDateTime
 									? new Date(event.startDateTime).toLocaleString(undefined, {
 											dateStyle: 'medium',
@@ -127,7 +100,6 @@ const ExploreEvents = () => {
 									: 'TBD';
 								const venueLabel = [event?.venue?.name, event?.venue?.city].filter(Boolean).join(' • ');
 								const tags = Array.isArray(event.tags) ? event.tags : [];
-								const isFavorite = Boolean(favoriteEvents[event._id]);
 
 								return (
 									<article
@@ -157,22 +129,10 @@ const ExploreEvents = () => {
 											<span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold uppercase tracking-wide text-brand-dark shadow-sm">
 												{event.status || 'draft'}
 											</span>
-
-											<button
-												type="button"
-												onClick={() => toggleFavorite(event._id)}
-												aria-pressed={isFavorite}
-												aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-												className={`absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/70 focus:ring-offset-2 focus:ring-offset-transparent ${
-													isFavorite
-														? 'border-rose-200 bg-white text-rose-500 shadow-lg shadow-rose-500/25 hover:bg-rose-50'
-														: 'border-white/60 bg-white/85 text-slate-500 hover:bg-white hover:text-rose-500'
-												}`}
-											>
-												<Heart
-													className={`h-5 w-5 transition-transform duration-300 ${isFavorite ? 'fill-current scale-110' : 'scale-100'}`}
-												/>
-											</button>
+											<span className="absolute right-4 top-4 rounded-full bg-rose-500 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-sm">
+												<Heart className="mr-1 inline h-3.5 w-3.5 fill-current align-[-2px]" />
+												Favorite
+											</span>
 										</div>
 
 										<div className="space-y-4 p-6">
@@ -202,12 +162,10 @@ const ExploreEvents = () => {
 													{typeof event.attendeeCount === 'number' ? event.attendeeCount : 0}
 												</p>
 											</div>
-											{isFavorite && (
-												<div className="inline-flex items-center gap-2 rounded-full bg-rose-50 px-3 py-1 text-xs font-semibold text-rose-600">
-													<Heart className="h-3.5 w-3.5 fill-current" />
-													Marked as favorite
-												</div>
-											)}
+											<div className="inline-flex items-center gap-2 rounded-full bg-rose-50 px-3 py-1 text-xs font-semibold text-rose-600">
+												<Heart className="h-3.5 w-3.5 fill-current" />
+												Saved to favorites
+											</div>
 
 											{tags.length > 0 && (
 												<div className="flex flex-wrap gap-2 pt-1">
@@ -225,13 +183,11 @@ const ExploreEvents = () => {
 									</article>
 								);
 							})}
->>>>>>> f2db9c9 (front fav)
 						</div>
 					)}
 				</div>
 			</section>
 		</main>
 	);
-};
-
-export default ExploreEvents;
+}
+export default Favourites;

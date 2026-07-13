@@ -5,12 +5,16 @@ import AuthForm from './components/AuthForm';
 import Home from './pages/homepage';
 import HostEvent from './pages/hosteventpage';
 import ExploreEvents from './pages/ExploreEvents';
+<<<<<<< HEAD
 import { useSelector } from 'react-redux';
 import ProfilePage from './pages/profilePage';
 import ManageEvents from './pages/manageHostEventPage';
 
 
 // const user=JSON.parse(localStorage.getItem('user'));
+=======
+import Favourites from './pages/Favourites';
+>>>>>>> f2db9c9 (front fav)
 const App = () => {
   const user=useSelector((state)=>state.auth.user);
   const role=user?.role || 'attendee'
@@ -37,8 +41,12 @@ const App = () => {
         <Route path='/explore' element={<ExploreEvents />} />
         <Route path='/host-event' element={<HostEvent />} />
         <Route path="/auth" element={<AuthForm />} />
+<<<<<<< HEAD
         <Route path='/profile' element={<ProfilePage/>}/>
         <Route path='/manage' element={<ManageEvents/>}/>
+=======
+        <Route path="/saved" element={<Favourites />} />
+>>>>>>> f2db9c9 (front fav)
       </Routes>
     </div>
   );
