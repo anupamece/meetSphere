@@ -59,9 +59,11 @@ const ExploreEvents = () => {
 		[events],
 	);
 
+	
+
 	return (
 		<main className="relative overflow-hidden bg-brand-bg">
-			<div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top,_rgba(155,126,189,0.22),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(74,30,109,0.12),_transparent_28%)]" />
+			<div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top,rgba(155,126,189,0.22),transparent_36%),radial-gradient(circle_at_bottom_right,rgba(74,30,109,0.12),transparent_28%)]" />
 
 			<section className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
 				<div className="max-w-3xl">
@@ -117,12 +119,20 @@ const ExploreEvents = () => {
 								const tags = Array.isArray(event.tags) ? event.tags : [];
 								const isFavorite = Boolean(favoriteEvents[event._id]);
 
+								const eventStatus = (
+								Date.now() < new Date(event.startDateTime)) 
+								? 'upcoming' : 
+								(Date.now() > new Date(event.endDateTime)) 
+								? 'completed' : 
+								(Date.now() > new Date(event.startDateTime) && Date.now() < new Date(event.endDateTime))
+								? 'live' :'no';
+
 								return (
 									<article
 										key={event._id}
 										className="group overflow-hidden rounded-3xl border border-brand-muted/60 bg-white/80 shadow-[0_18px_45px_-30px_rgba(74,30,109,0.45)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_60px_-35px_rgba(74,30,109,0.55)]"
 									>
-										<div className="relative h-56 overflow-hidden bg-gradient-to-br from-secondary via-primary to-brand-muted">
+										<div className="relative h-56 overflow-hidden bg-linear-to-br from-secondary via-primary to-brand-muted">
 											{event.coverImage ? (
 												<img
 													src={event.coverImage}
@@ -143,7 +153,7 @@ const ExploreEvents = () => {
 											)}
 
 											<span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold uppercase tracking-wide text-brand-dark shadow-sm">
-												{event.status || 'draft'}
+												{eventStatus || 'draft'}
 											</span>
 
 											<button

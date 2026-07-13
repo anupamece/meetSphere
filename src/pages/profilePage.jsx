@@ -15,15 +15,15 @@ const ProfilePage = () => {
   if (!user) {
     return (
       <div className="min-h-[70vh] flex items-center justify-center">
-        <div className="bg-white/60 backdrop-blur-sm rounded-3xl border border-[#D4BEE4]/60 p-10 text-center space-y-4 max-w-sm">
-          <div className="p-4 bg-[#D4BEE4]/30 rounded-2xl inline-flex">
-            <User className="w-10 h-10 text-[#9B7EBD]" />
+        <div className="bg-white/60 backdrop-blur-sm rounded-3xl border border-brand-muted/60 p-10 text-center space-y-4 max-w-sm">
+          <div className="p-4 bg-brand-muted/30 rounded-2xl inline-flex">
+            <User className="w-10 h-10 text-primary" />
           </div>
           <h2 className="font-display text-2xl font-bold text-[#4A1E6D]">Not Logged In</h2>
           <p className="font-premium text-sm text-[#4A1E6D]/70">Please sign in to view your profile.</p>
           <button
             onClick={() => navigate('/auth')}
-            className="gradient-brand text-white font-premium font-semibold px-6 py-2.5 rounded-xl hover:opacity-95 transition-premium shadow-md shadow-[#9B7EBD]/20 cursor-pointer"
+            className="gradient-brand text-white font-premium font-semibold px-6 py-2.5 rounded-xl hover:opacity-95 transition-premium shadow-md shadow-primary/20 cursor-pointer"
           >
             Sign In
           </button>
@@ -100,11 +100,11 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#EEEEEE] py-10 px-4">
+    <div className="min-h-screen bg-brand-bg py-10 px-4">
       <div className="max-w-2xl mx-auto space-y-8">
 
         {/* ─── Profile Header Card ─── */}
-        <div className="bg-white/60 backdrop-blur-sm rounded-3xl border border-[#D4BEE4]/60 shadow-sm overflow-hidden">
+        <div className="bg-white/60 backdrop-blur-sm rounded-3xl border border-brand-muted/60 shadow-sm overflow-hidden">
           
           {/* Gradient Banner */}
           <div className="h-28 sm:h-32 gradient-brand relative">
@@ -119,7 +119,7 @@ const ProfilePage = () => {
             <div className="flex justify-center -mt-14 sm:-mt-16">
               <div className="relative">
                 {/* Outer glow ring */}
-                <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-[#9B7EBD] to-[#4A1E6D] opacity-60 blur-sm"></div>
+                <div className="absolute -inset-1 rounded-full bg-linear-to-br from-primary to-[#4A1E6D] opacity-60 blur-sm"></div>
                 <img
                   src="/default-avatar.png"
                   alt="Profile"
@@ -143,7 +143,7 @@ const ProfilePage = () => {
                 <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold font-premium uppercase tracking-wider ${
                   user.role === 'organizer'
                     ? 'bg-[#4A1E6D]/10 text-[#4A1E6D] border border-[#4A1E6D]/20'
-                    : 'bg-[#D4BEE4]/40 text-[#9B7EBD] border border-[#D4BEE4]'
+                    : 'bg-brand-muted/40 text-primary border border-brand-muted'
                 }`}>
                   <Shield className="w-3 h-3" />
                   {user.role}
@@ -152,7 +152,7 @@ const ProfilePage = () => {
             </div>
 
             {/* Quick Stats Row */}
-            <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-[#D4BEE4]/40">
+            <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-brand-muted/40">
               <div className="text-center">
                 <p className="font-display text-2xl font-bold text-[#4A1E6D]">0</p>
                 <p className="font-premium text-xs text-[#4A1E6D]/55 mt-0.5">Events</p>
@@ -170,19 +170,19 @@ const ProfilePage = () => {
         </div>
 
         {/* ─── Profile Action Items ─── */}
-        <div className="bg-white/60 backdrop-blur-sm rounded-3xl border border-[#D4BEE4]/60 shadow-sm overflow-hidden">
-          <div className="px-6 sm:px-8 py-5 border-b border-[#D4BEE4]/40">
-            <h2 className="font-premium font-bold text-sm uppercase tracking-wider text-[#9B7EBD]">
+        <div className="bg-white/60 backdrop-blur-sm rounded-3xl border border-brand-muted/60 shadow-sm overflow-hidden">
+          <div className="px-6 sm:px-8 py-5 border-b border-brand-muted/40">
+            <h2 className="font-premium font-bold text-sm uppercase tracking-wider text-primary">
               Account
             </h2>
           </div>
 
-          <div className="divide-y divide-[#D4BEE4]/30">
+          <div className="divide-y divide-brand-muted/30">
             {profileActions.map((action, idx) => (
               <a
                 key={idx}
                 href={action.href}
-                className="flex items-center gap-4 px-6 sm:px-8 py-4 hover:bg-[#D4BEE4]/10 transition-all duration-200 group cursor-pointer"
+                className="flex items-center gap-4 px-6 sm:px-8 py-4 hover:bg-brand-muted/10 transition-all duration-200 group cursor-pointer"
               >
                 {/* Icon Container */}
                 <div className={`p-2.5 rounded-xl ${action.bg} ${action.color} group-hover:scale-110 transition-transform duration-200`}>
@@ -191,7 +191,7 @@ const ProfilePage = () => {
 
                 {/* Label & Description */}
                 <div className="flex-1 min-w-0">
-                  <p className="font-premium font-semibold text-sm text-[#4A1E6D] group-hover:text-[#9B7EBD] transition-colors duration-200">
+                  <p className="font-premium font-semibold text-sm text-[#4A1E6D] group-hover:text-primary transition-colors duration-200">
                     {action.label}
                   </p>
                   <p className="font-premium text-xs text-[#4A1E6D]/55 truncate">
@@ -200,7 +200,7 @@ const ProfilePage = () => {
                 </div>
 
                 {/* Chevron Arrow */}
-                <ChevronRight className="w-4 h-4 text-[#D4BEE4] group-hover:text-[#9B7EBD] group-hover:translate-x-1 transition-all duration-200" />
+                <ChevronRight className="w-4 h-4 text-brand-muted group-hover:text-primary group-hover:translate-x-1 transition-all duration-200" />
               </a>
             ))}
           </div>

@@ -1,5 +1,3 @@
-import React from 'react';
-
 const HeroSection = () => {
   return (
     <section className="relative overflow-hidden bg-[#EEEEEE] pt-16 pb-24 md:pt-20 md:pb-32 border-b border-[#D4BEE4]/40">

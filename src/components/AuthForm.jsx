@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch,useSelector } from 'react-redux';
 import {loginStart,loginSuccess,loginFailure} from '../redux/authSlice';
 import {loginUser,registerUser} from '../api/authApi';
 import { useNavigate } from 'react-router-dom';
 
-const AuthForm = ({ defaultMode = 'login', onSubmit }) => {
+const AuthForm = ({ defaultMode = 'login' }) => {
   const dispatch = useDispatch();
   const navigate= useNavigate();
   const {loading,error}=useSelector((state)=>state.auth)

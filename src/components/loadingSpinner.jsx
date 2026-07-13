@@ -1,5 +1,3 @@
-import React from 'react';
-
 const LoadingSpinner = ({ fullPage = false, message = "Loading..." }) => {
   const spinnerContent = (
     <div className="flex flex-col items-center justify-center space-y-4 p-6 text-center animate-fade-in">

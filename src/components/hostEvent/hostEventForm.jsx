@@ -1,4 +1,3 @@
-import React from 'react'
 import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import { createEvent } from '../../api/eventApi';
@@ -125,7 +124,7 @@ const HostEventForm = () => {
     return (
     <div className="max-w-3xl mx-auto px-4 py-12">
       {loading && <LoadingSpinner fullPage={true} message="Publishing your event..." />}
-      <div className="bg-white/60 backdrop-blur-sm rounded-3xl border border-[#D4BEE4]/60 p-8 sm:p-10 shadow-sm">
+      <div className="bg-white/60 backdrop-blur-sm rounded-3xl border border-brand-muted/6060 p-8 sm:p-10 shadow-sm">
 
         {/* Form Header */}
         <div className="text-center mb-8 space-y-2">
@@ -147,7 +146,7 @@ const HostEventForm = () => {
 
           {/* ─── Section 1: Basic Details ─── */}
           <div className="space-y-5">
-            <h3 className="font-premium font-bold text-sm uppercase tracking-wider text-[#9B7EBD] border-b border-[#D4BEE4]/40 pb-2">
+            <h3 className="font-premium font-bold text-sm uppercase tracking-wider text-primary border-b border-brand-muted/40 pb-2">
               Event Details
             </h3>
 
@@ -163,9 +162,9 @@ const HostEventForm = () => {
                 value={formData.title}
                 onChange={handleChange}
                 placeholder="E-sports Championship 2026"
-                className="w-full px-4 py-3 bg-[#EEEEEE]/50 border border-[#D4BEE4]/60 rounded-xl
-                  font-premium text-sm focus:outline-none focus:ring-2 focus:ring-[#9B7EBD]/30
-                  focus:border-[#9B7EBD] focus:bg-white transition-all duration-200"
+                className="w-full px-4 py-3 bg-brand-bg/50 border border-brand-muted/60 rounded-xl
+                  font-premium text-sm focus:outline-none focus:ring-2 focus:ring-primary/30
+                  focus:border-primary focus:bg-white transition-all duration-200"
               />
             </div>
 
@@ -181,9 +180,9 @@ const HostEventForm = () => {
                 value={formData.description}
                 onChange={handleChange}
                 placeholder="Describe your event, what attendees can expect..."
-                className="w-full px-4 py-3 bg-[#EEEEEE]/50 border border-[#D4BEE4]/60 rounded-xl
-                  font-premium text-sm focus:outline-none focus:ring-2 focus:ring-[#9B7EBD]/30
-                  focus:border-[#9B7EBD] focus:bg-white transition-all duration-200 resize-none"
+                className="w-full px-4 py-3 bg-brand-bg/50 border border-brand-muted/60 rounded-xl
+                  font-premium text-sm focus:outline-none focus:ring-2 focus:ring-primary/30
+                  focus:border-primary focus:bg-white transition-all duration-200 resize-none"
               />
             </div>
 
@@ -196,9 +195,9 @@ const HostEventForm = () => {
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-[#EEEEEE]/50 border border-[#D4BEE4]/60 rounded-xl
-                  font-premium text-sm focus:outline-none focus:ring-2 focus:ring-[#9B7EBD]/30
-                  focus:border-[#9B7EBD] focus:bg-white transition-all duration-200 cursor-pointer"
+                className="w-full px-4 py-3 bg-brand-bg/50 border border-brand-muted/60 rounded-xl
+                  font-premium text-sm focus:outline-none focus:ring-2 focus:ring-primary/30
+                  focus:border-primary focus:bg-white transition-all duration-200 cursor-pointer"
               >
                 {categories.map((category) => (
                   <option key={category} value={category}>
@@ -219,16 +218,16 @@ const HostEventForm = () => {
                 value={formData.tags}
                 onChange={handleChange}
                 placeholder="gaming, tournament, esports"
-                className="w-full px-4 py-3 bg-[#EEEEEE]/50 border border-[#D4BEE4]/60 rounded-xl
-                  font-premium text-sm focus:outline-none focus:ring-2 focus:ring-[#9B7EBD]/30
-                  focus:border-[#9B7EBD] focus:bg-white transition-all duration-200"
+                className="w-full px-4 py-3 bg-brand-bg/50 border border-brand-muted/60 rounded-xl
+                  font-premium text-sm focus:outline-none focus:ring-2 focus:ring-primary/30
+                  focus:border-primary focus:bg-white transition-all duration-200"
               />
             </div>
           </div>
 
           {/* ─── Section 2: Date & Time ─── */}
           <div className="space-y-5">
-            <h3 className="font-premium font-bold text-sm uppercase tracking-wider text-[#9B7EBD] border-b border-[#D4BEE4]/40 pb-2">
+            <h3 className="font-premium font-bold text-sm uppercase tracking-wider text-primary border-b border-brand-muted/40 pb-2">
               Schedule
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -242,9 +241,9 @@ const HostEventForm = () => {
                   required
                   value={formData.startDateTime}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-[#EEEEEE]/50 border border-[#D4BEE4]/60 rounded-xl
-                    font-premium text-sm focus:outline-none focus:ring-2 focus:ring-[#9B7EBD]/30
-                    focus:border-[#9B7EBD] focus:bg-white transition-all duration-200"
+                  className="w-full px-4 py-3 bg-brand-bg/50 border border-brand-muted/60 rounded-xl
+                    font-premium text-sm focus:outline-none focus:ring-2 focus:ring-primary/30
+                    focus:border-primary focus:bg-white transition-all duration-200"
                 />
               </div>
               <div className="space-y-1.5">
@@ -257,9 +256,9 @@ const HostEventForm = () => {
                   required
                   value={formData.endDateTime}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-[#EEEEEE]/50 border border-[#D4BEE4]/60 rounded-xl
-                    font-premium text-sm focus:outline-none focus:ring-2 focus:ring-[#9B7EBD]/30
-                    focus:border-[#9B7EBD] focus:bg-white transition-all duration-200"
+                  className="w-full px-4 py-3 bg-brand-bg/50 border border-brand-muted/60 rounded-xl
+                    font-premium text-sm focus:outline-none focus:ring-2 focus:ring-primary/30
+                    focus:border-primary focus:bg-white transition-all duration-200"
                 />
               </div>
             </div>
@@ -267,7 +266,7 @@ const HostEventForm = () => {
 
           {/* ─── Section 3: Venue ─── */}
           <div className="space-y-5">
-            <h3 className="font-premium font-bold text-sm uppercase tracking-wider text-[#9B7EBD] border-b border-[#D4BEE4]/40 pb-2">
+            <h3 className="font-premium font-bold text-sm uppercase tracking-wider text-primary border-b border-brand-muted/40 pb-2">
               Venue
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -291,7 +290,7 @@ const HostEventForm = () => {
 
           {/* ─── Section 4: Images ─── */}
           <div className="space-y-5">
-            <h3 className="font-premium font-bold text-sm uppercase tracking-wider text-[#9B7EBD] border-b border-[#D4BEE4]/40 pb-2">
+            <h3 className="font-premium font-bold text-sm uppercase tracking-wider text-primary border-b border-brand-muted/40 pb-2">
               Media
             </h3>
 
@@ -303,14 +302,14 @@ const HostEventForm = () => {
               <input type="file" accept="image/*" onChange={handleCoverImage}
                 className="block w-full text-sm font-premium text-[#4A1E6D]/70
                   file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border
-                  file:border-[#D4BEE4] file:text-sm file:font-semibold file:font-premium
-                  file:bg-[#D4BEE4]/30 file:text-[#4A1E6D] file:cursor-pointer
-                  hover:file:bg-[#D4BEE4]/50 transition-all"
+                  file:border-brand-muted file:text-sm file:font-semibold file:font-premium
+                  file:bg-brand-muted/30 file:text-[#4A1E6D] file:cursor-pointer
+                  hover:file:bg-brand-muted/50 transition-all"
               />
               {/* Live Preview */}
               {coverPreview && (
                 <img src={coverPreview} alt="Cover preview"
-                  className="mt-2 w-full max-h-48 object-cover rounded-xl border border-[#D4BEE4]/60" />
+                  className="mt-2 w-full max-h-48 object-cover rounded-xl border border-brand-muted/60" />
               )}
             </div>
 
@@ -325,7 +324,7 @@ const HostEventForm = () => {
                 <div className="grid grid-cols-3 gap-2 mt-2">
                   {imagePreviews.map((src, i) => (
                     <img key={i} src={src} alt={`Preview ${i}`}
-                      className="w-full h-24 object-cover rounded-lg border border-[#D4BEE4]/60" />
+                      className="w-full h-24 object-cover rounded-lg border border-brand-muted/60" />
                   ))}
                 </div>
               )}
@@ -337,7 +336,7 @@ const HostEventForm = () => {
             type="submit"
             disabled={loading}
             className={`w-full gradient-brand text-white font-premium font-semibold py-3.5 px-6
-              rounded-xl hover:opacity-95 transition-premium shadow-md shadow-[#9B7EBD]/20
+              rounded-xl hover:opacity-95 transition-premium shadow-md shadow-primary/20
               cursor-pointer ${loading ? 'opacity-60 cursor-not-allowed' : ''}`}
           >
             {loading ? 'Creating Event...' : 'Publish Event'}

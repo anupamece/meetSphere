@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { getOrganiserEvents } from '../api/eventApi';
+import { useEffect, useState } from 'react';
+import { getOrganiserEvents,deleteEvent } from '../api/eventApi';
 import LoadingSpinner from '../components/LoadingSpinner';
 import EventCard from '../components/EventCard';
 
 const ManageEvents = () => {
-  const user = useSelector((state) => state.auth.user);
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -35,7 +33,28 @@ const ManageEvents = () => {
     };
   }, []);
 
-  const handleDelete=(id)=>{
+  const handleDelete= async (id)=>{
+    const confirm=window.confirm('Are you sure you want to delete this')
+    if(!confirm) return;
+
+    try{
+        setLoading(true)
+        setError(null)
+
+        await deleteEvent(id);
+
+        setEvents((prev)=>(
+            prev.filter((event)=> event._id !== id)
+        ));
+    }
+    catch(err){
+        setError(err.response?.data?.message || "Failed to delete event")
+    }
+    finally{
+        setLoading(false)
+    }
+    
+
     console.log('delete button clicked of event_id:',id)
   }
   const handleEdit=(id)=>{
@@ -44,7 +63,7 @@ const ManageEvents = () => {
 
   return (
     <main className="relative overflow-hidden bg-brand-bg">
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top,_rgba(155,126,189,0.22),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(74,30,109,0.12),_transparent_28%)]" />
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top,rgba(155,126,189,0.22),transparent_36%),radial-gradient(circle_at_bottom_right,rgba(74,30,109,0.12),transparent_28%)]" />
 
       <section className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         {/* Page Header */}
@@ -87,7 +106,7 @@ const ManageEvents = () => {
               </p>
               <a
                 href="/host-event"
-                className="mt-6 inline-block gradient-brand text-white font-premium font-semibold px-6 py-2.5 rounded-xl hover:opacity-95 transition-premium shadow-md shadow-[#9B7EBD]/20 cursor-pointer"
+                className="mt-6 inline-block gradient-brand text-white font-premium font-semibold px-6 py-2.5 rounded-xl hover:opacity-95 transition-premium shadow-md shadow-primary/20 cursor-pointer"
               >
                 Host an Event
               </a>

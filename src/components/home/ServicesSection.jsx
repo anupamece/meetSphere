@@ -1,4 +1,3 @@
-import React from 'react';
 import { Music, Gamepad2, BookOpen, Presentation, Users, Trophy } from 'lucide-react';
 
 const ServicesSection = () => {

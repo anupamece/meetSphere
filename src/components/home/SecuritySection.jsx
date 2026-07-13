@@ -1,5 +1,3 @@
-import React from 'react';
-
 const SecuritySection = () => {
   return (
     <section className="py-20 bg-[#EEEEEE] overflow-hidden border-b border-[#D4BEE4]/40">

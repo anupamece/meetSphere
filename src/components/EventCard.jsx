@@ -16,12 +16,19 @@ const EventCard = ({ event, showActions = false, onDelete, onEdit }) => {
 
   const tags = Array.isArray(event.tags) ? event.tags : [];
   
+  const eventStatus = (
+    Date.now() < new Date(event.startDateTime)) 
+    ? 'upcoming' : 
+    (Date.now() > new Date(event.endDateTime)) 
+    ? 'completed' : 
+    (Date.now() > new Date(event.startDateTime) && Date.now() < new Date(event.endDateTime))
+     ? 'live' :'no';
 
   return (
     <article
       className="group overflow-hidden rounded-3xl border border-brand-muted/60 bg-white/80 shadow-[0_18px_45px_-30px_rgba(74,30,109,0.45)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_60px_-35px_rgba(74,30,109,0.55)]"
     >
-      <div className="relative h-56 overflow-hidden bg-gradient-to-br from-secondary via-primary to-brand-muted">
+      <div className="relative h-56 overflow-hidden bg-linear-to-br from-secondary via-primary to-brand-muted">
         {event.coverImage ? (
           <img
             src={event.coverImage}
@@ -42,7 +49,7 @@ const EventCard = ({ event, showActions = false, onDelete, onEdit }) => {
         )}
 
         <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold uppercase tracking-wide text-brand-dark shadow-sm">
-          {event.status || 'draft'}
+          {eventStatus}
         </span>
       </div>
 
@@ -97,7 +104,7 @@ const EventCard = ({ event, showActions = false, onDelete, onEdit }) => {
           <div className="flex gap-3 pt-3 border-t border-brand-muted/40">
             <button
               onClick={() => onEdit(event._id)}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-[#D4BEE4] bg-white text-sm font-semibold font-premium text-[#4A1E6D] hover:bg-[#D4BEE4]/20 hover:border-[#9B7EBD] transition-all duration-200 cursor-pointer"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-brand-muted bg-white text-sm font-semibold font-premium text-[#4A1E6D] hover:bg-brand-muted/20 hover:border-primary transition-all duration-200 cursor-pointer"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path

@@ -1,4 +1,3 @@
-import { IdCardIcon } from 'lucide-react';
 import API from './axiosInstance';
 
 
@@ -12,6 +11,11 @@ export const getEvents = async () => {
     return response.data;
 }
 
+export const getOrganiserEvents = async () => {
+    const response = await API.get('/events/my-events');
+    return response.data;
+}
+
 export const isfav = async(id)=>{
     const response = await API.post(`/events/isfav/${id}`);
     return response.data;
@@ -19,5 +23,9 @@ export const isfav = async(id)=>{
 
 export const eventDetails = async(id)=>{
     const response = await API.get(`/events/eventDetails/${id}`);
+    return response.data;
+}
+export const deleteEvent= async(id)=>{
+    const response=await API.post(`/events/deleteEvent/${id}`);
     return response.data;
 }

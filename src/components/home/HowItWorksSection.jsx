@@ -1,5 +1,3 @@
-import React from 'react';
-
 const HowItWorksSection = () => {
   const attendeeSteps = [
     { num: "01", title: "Browse & Filter", text: "Search events by category, location tags, or calendar dates." },
