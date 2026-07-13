@@ -1,3 +1,5 @@
+import React from 'react';
+
 const LoadingSpinner = ({ fullPage = false, message = "Loading..." }) => {
   const spinnerContent = (
     <div className="flex flex-col items-center justify-center space-y-4 p-6 text-center animate-fade-in">
@@ -22,7 +24,7 @@ const LoadingSpinner = ({ fullPage = false, message = "Loading..." }) => {
       <div className="relative w-20 h-20 flex items-center justify-center">
         
         {/* Pulsing Outer Ring (Soft Lavender) */}
-        <div className="absolute inset-0 rounded-full border-4 border-[#D4BEE4]/40 anim-pulse-ring"></div>
+        <div className="absolute inset-0 rounded-full border-4 border-brand-muted/40 anim-pulse-ring"></div>
         
         {/* Futuristic Dual Ring Spinner (Amethyst to Royal Purple) */}
         <svg 
@@ -57,7 +59,7 @@ const LoadingSpinner = ({ fullPage = false, message = "Loading..." }) => {
         </svg>
 
         {/* Small glowing center dot */}
-        <div className="absolute w-2.5 h-2.5 rounded-full bg-[#4A1E6D] shadow-md shadow-[#9B7EBD]/50"></div>
+        <div className="absolute w-2.5 h-2.5 rounded-full bg-[#4A1E6D] shadow-md shadow-primary/50"></div>
       </div>
 
       {/* Message Text */}
@@ -71,8 +73,8 @@ const LoadingSpinner = ({ fullPage = false, message = "Loading..." }) => {
 
   if (fullPage) {
     return (
-      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#EEEEEE]/75 backdrop-blur-md">
-        <div className="bg-white/80 rounded-3xl border border-[#D4BEE4]/60 p-8 shadow-xl max-w-xs w-full">
+      <div className="fixed inset-0 z-100 flex items-center justify-center bg-brand-bg/75 backdrop-blur-md">
+        <div className="bg-white/80 rounded-3xl border border-brand-muted/60 p-8 shadow-xl max-w-xs w-full">
           {spinnerContent}
         </div>
       </div>

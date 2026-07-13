@@ -1,4 +1,4 @@
-import { useState,useRef,useEffect } from 'react';
+import React, { useState,useRef,useEffect } from 'react';
 import { Link ,useNavigate,NavLink} from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../redux/authSlice';
@@ -60,7 +60,7 @@ const Navbar = ({ currentRole}) => {
               alt="meetSphere Logo" 
               className="w-10 h-10 sm:w-11 sm:h-11 object-contain"
             />
-            <span className="font-display text-xl sm:text-2xl font-bold tracking-tight bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent group-hover:from-primary-hover group-hover:to-primary-hover transition-all duration-300">
+            <span className="font-display text-xl sm:text-2xl font-bold tracking-tight bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent group-hover:from-primary-hover group-hover:to-primary-hover transition-all duration-300">
               meetSphere
             </span>
           </Link>
@@ -77,7 +77,7 @@ const Navbar = ({ currentRole}) => {
                     <>
                         {link.label}
                         <span
-                            className={`absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-primary to-secondary transition-all duration-300 ${
+                            className={`absolute bottom-0 left-0 h-0.5 bg-linear-to-r from-primary to-secondary transition-all duration-300 ${
                             isActive ? 'w-full' : 'w-0 group-hover:w-full'
                             }`}
                         />
