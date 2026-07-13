@@ -11,13 +11,13 @@ export const getEvents = async () => {
     const response = await API.get('/events/getEvents');
     return response.data;
 }
-<<<<<<< HEAD
-export const getOrganiserEvents = async ()=>{
-    const response=await API.get(`events/my-events`);
-=======
 
 export const isfav = async(id)=>{
     const response = await API.post(`/events/isfav/${id}`);
->>>>>>> f2db9c9 (front fav)
+    return response.data;
+}
+
+export const eventDetails = async(id)=>{
+    const response = await API.get(`/events/eventDetails/${id}`);
     return response.data;
 }

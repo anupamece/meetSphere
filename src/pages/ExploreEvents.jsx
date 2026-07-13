@@ -1,24 +1,17 @@
 import React, { useEffect, useMemo, useState } from 'react';
-<<<<<<< HEAD
-import { getEvents } from '../api/eventApi';
-import EventCard from '../components/EventCard';
-import LoadingSpinner from '../components/LoadingSpinner';
-=======
 import { Heart } from 'lucide-react';
 import { getEvents , isfav } from '../api/eventApi';
->>>>>>> f2db9c9 (front fav)
+import EventCard from '../components/EventCard';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { Link } from 'react-router-dom';
 
 const ExploreEvents = () => {
 	const [events, setEvents] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState('');
-<<<<<<< HEAD
-
-=======
   const [favoriteEvents, setFavoriteEvents] = useState({});
   
   
->>>>>>> f2db9c9 (front fav)
 	useEffect(() => {
     let isActive = true;
     
@@ -50,8 +43,6 @@ const ExploreEvents = () => {
 		};
 	}, []);
 
-<<<<<<< HEAD
-=======
 	const toggleFavorite = async (eventId) => {
 		try {
 			const response = await isfav(eventId);
@@ -63,7 +54,6 @@ const ExploreEvents = () => {
 			setError(err.response?.data?.message || 'Failed to update favorite.');
 		}
 	};
->>>>>>> f2db9c9 (front fav)
 	const sortedEvents = useMemo(
 		() => [...events].sort((left, right) => new Date(right.createdAt) - new Date(left.createdAt)),
 		[events],
@@ -113,11 +103,9 @@ const ExploreEvents = () => {
 
 					{!loading && !error && sortedEvents.length > 0 && (
 						<div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-<<<<<<< HEAD
-							{sortedEvents.map((event) => (
+							{/* {sortedEvents.map((event) => (
 								<EventCard key={event._id} event={event} />
-							))}
-=======
+							))} */}
 							{sortedEvents.map((event) => {
 								const startLabel = event.startDateTime
 									? new Date(event.startDateTime).toLocaleString(undefined, {
@@ -201,14 +189,16 @@ const ExploreEvents = () => {
 													<span className="font-semibold text-brand-dark">Attendees:</span>{' '}
 													{typeof event.attendeeCount === 'number' ? event.attendeeCount : 0}
 												</p>
+                        
 											</div>
+                        
+
 											{isFavorite && (
 												<div className="inline-flex items-center gap-2 rounded-full bg-rose-50 px-3 py-1 text-xs font-semibold text-rose-600">
 													<Heart className="h-3.5 w-3.5 fill-current" />
 													Marked as favorite
 												</div>
 											)}
-
 											{tags.length > 0 && (
 												<div className="flex flex-wrap gap-2 pt-1">
 													{tags.map((tag) => (
@@ -222,10 +212,18 @@ const ExploreEvents = () => {
 												</div>
 											)}
 										</div>
+
+                    <div className="pt-4">
+                      <Link
+                        to={`/event/${event._id}`}
+                        className="inline-flex w-full items-center justify-center rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white transition hover:bg-primary/90"
+                      >
+                        View Details
+                      </Link>
+                    </div>
 									</article>
 								);
 							})}
->>>>>>> f2db9c9 (front fav)
 						</div>
 					)}
 				</div>
