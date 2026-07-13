@@ -1,16 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
+import { useSelector } from 'react-redux';
 import Navbar from './components/Navbar';
 import { Route ,Routes,useLocation } from 'react-router-dom';
 import AuthForm from './components/AuthForm';
 import Home from './pages/homepage';
 import HostEvent from './pages/hosteventpage';
 import ExploreEvents from './pages/ExploreEvents';
-import { useSelector } from 'react-redux';
-import ProfilePage from './pages/profilePage';
-import ManageEvents from './pages/manageHostEventPage';
-
-
-// const user=JSON.parse(localStorage.getItem('user'));
+import EventDetails from './components/EventDetails';
+import Favourites from './pages/Favourites';
 const App = () => {
   const user=useSelector((state)=>state.auth.user);
   const role=user?.role || 'attendee'
@@ -37,8 +34,8 @@ const App = () => {
         <Route path='/explore' element={<ExploreEvents />} />
         <Route path='/host-event' element={<HostEvent />} />
         <Route path="/auth" element={<AuthForm />} />
-        <Route path='/profile' element={<ProfilePage/>}/>
-        <Route path='/manage' element={<ManageEvents/>}/>
+        <Route path="/saved" element={<Favourites />} />
+        <Route path="/event/:id" element={<EventDetails />} />
       </Routes>
     </div>
   );
