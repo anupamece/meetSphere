@@ -8,6 +8,7 @@ import ExploreEvents from './pages/ExploreEvents';
 import EventDetails from './components/EventDetails';
 import Favourites from './pages/Favourites';
 import ManageEvents from './pages/manageHostEventPage';
+import Dining from './pages/Dining';
 const App = () => {
   const user=useSelector((state)=>state.auth.user);
   const role=user?.role || 'attendee'
@@ -36,7 +37,8 @@ const App = () => {
         <Route path="/saved" element={<Favourites />} />
         <Route path='/manage' element={<ManageEvents/>}/>
         <Route path="/event/:id" element={<EventDetails />} />
-      </Routes>
+        <Route path="/dining" element={<Dining />} />
+      </Routes>=
     </div>
   );
 };
