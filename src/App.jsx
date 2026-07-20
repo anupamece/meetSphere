@@ -9,6 +9,11 @@ import EventDetails from './components/EventDetails';
 import Favourites from './pages/Favourites';
 import ManageEvents from './pages/manageHostEventPage';
 import Dining from './pages/Dining';
+import AddMovies from './components/addMovies/AddMovies';
+import Movie from './pages/Movie';
+import MovieDetails from './components/MovieDetails';
+
+
 const App = () => {
   const user=useSelector((state)=>state.auth.user);
   const role=user?.role || 'attendee'
@@ -16,12 +21,12 @@ const App = () => {
   
   const location = useLocation();
 
-  const hideNavbar = location.pathname === '/auth'; // Hide Navbar on the auth page
+  const hideNavbar = location.pathname === '/auth'; 
   return (
     
     <div className="min-h-screen bg-brand-bg text-brand-dark">
       
-      {/* Rendering the Navbar component with dynamic role and login states */}
+     
       {!hideNavbar &&(
         <Navbar 
         currentRole={role}
@@ -38,6 +43,9 @@ const App = () => {
         <Route path='/manage' element={<ManageEvents/>}/>
         <Route path="/event/:id" element={<EventDetails />} />
         <Route path="/dining" element={<Dining />} />
+        <Route path="/add-movies" element={<AddMovies />} />
+        <Route path="/movies" element={<Movie />} />
+        <Route path="/movie/:id" element={<MovieDetails />} />
       </Routes>=
     </div>
   );

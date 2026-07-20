@@ -20,9 +20,10 @@ const Navbar = ({ currentRole}) => {
 
   const attendeeLinks = [
     { label: 'Explore Events', href: '/explore' },
+    { label: 'Dining', href: '/dining' },
+    { label: 'Movies', href: '/movies' },
     { label: 'Favorite Events', href: '/saved' },
     { label: 'My Tickets', href: '/tickets' },
-    { label: 'Dining', href: '/dining' }
   ];
 
   const organizerLinks = [
