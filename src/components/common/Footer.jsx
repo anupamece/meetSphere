@@ -1,6 +1,8 @@
+import React from 'react';
+
 const Footer = () => {
   return (
-    <footer className="bg-[#4A1E6D] text-[#EEEEEE] pt-16 pb-8 border-t border-[#4A1E6D]">
+    <footer className="bg-[#160B24] text-[#EEEEEE] pt-16 pb-8 border-t border-[#160B24]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Footer Top Grid */}
@@ -27,10 +29,10 @@ const Footer = () => {
           <div className="lg:col-span-2 space-y-4">
             <h4 className="font-premium font-bold text-sm uppercase tracking-wider text-white">Explore</h4>
             <ul className="space-y-2 font-premium text-sm text-[#D4BEE4]">
-              <li><a href="#explore" className="hover:text-white transition-colors duration-200">Browse Events</a></li>
-              <li><a href="#create-event" className="hover:text-white transition-colors duration-200">Host Event</a></li>
-              <li><a href="#pricing" className="hover:text-white transition-colors duration-200">Pricing Tiers</a></li>
-              <li><a href="#scanner" className="hover:text-white transition-colors duration-200">QR Scanner</a></li>
+              <li><a href="/explore" className="hover:text-white transition-colors duration-200">Browse Events</a></li>
+              <li><a href="/host-event" className="hover:text-white transition-colors duration-200">Host Event</a></li>
+              <li><a href="/dining" className="hover:text-white transition-colors duration-200">Dining</a></li>
+              <li><a href="/movies" className="hover:text-white transition-colors duration-200">Movies</a></li>
             </ul>
           </div>
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { User, Mail, Phone, ArrowLeft, ArrowRight } from "lucide-react";
+import { User, Mail, Phone, ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
 
 const StepAttendeeDetails = ({
   attendeeName,
@@ -10,8 +10,10 @@ const StepAttendeeDetails = ({
   setAttendeePhone,
   handleBack,
   handleNext,
+  handlePaymentSubmit,
   canProceedStep2,
   isFree,
+  processingPayment,
 }) => {
   return (
     <div className="relative z-10 space-y-6">
@@ -20,7 +22,7 @@ const StepAttendeeDetails = ({
           Your Details
         </h3>
         <p className="font-premium text-sm text-[#4A1E6D]/60">
-          We'll use this for your digital ticket.
+          We'll use this for your digital ticket pass.
         </p>
       </div>
 
@@ -84,18 +86,33 @@ const StepAttendeeDetails = ({
       <div className="flex gap-3 pt-2">
         <button
           onClick={handleBack}
-          className="flex-1 py-3.5 rounded-xl border border-[#D4BEE4]/60 bg-white/80 font-premium font-semibold text-[#4A1E6D] text-sm hover:bg-[#EEEEEE] transition-premium flex items-center justify-center gap-2 cursor-pointer"
+          disabled={processingPayment}
+          className="flex-1 py-3.5 rounded-xl border border-[#D4BEE4]/60 bg-white/80 font-premium font-semibold text-[#4A1E6D] text-sm hover:bg-[#EEEEEE] transition-premium flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
         >
           <ArrowLeft className="w-4 h-4" />
           Back
         </button>
         <button
-          onClick={handleNext}
-          disabled={!canProceedStep2}
+          onClick={isFree ? handlePaymentSubmit : handleNext}
+          disabled={!canProceedStep2 || processingPayment}
           className="flex-[2] gradient-brand text-white font-premium font-semibold py-3.5 rounded-xl hover:opacity-95 transition-premium shadow-md shadow-[#9B7EBD]/20 flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
         >
-          {isFree ? "Confirm Booking" : "Continue to Payment"}
-          <ArrowRight className="w-4 h-4" />
+          {processingPayment ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              Generating Pass...
+            </>
+          ) : isFree ? (
+            <>
+              Confirm Free Pass
+              <ArrowRight className="w-4 h-4" />
+            </>
+          ) : (
+            <>
+              Continue to Payment
+              <ArrowRight className="w-4 h-4" />
+            </>
+          )}
         </button>
       </div>
     </div>

@@ -14,16 +14,15 @@ import {
   AlertCircle,
   Loader2,
   CheckCircle2,
-  XCircle,
-  Filter
+  XCircle
 } from 'lucide-react';
 
-const MyTickets = () => {
+const MyTicketsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [bookings, setBookings] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeTab, setActiveTab] = useState('All'); // 'All' | 'Movie' | 'Event' | 'Dining'
+  const [activeTab, setActiveTab] = useState('All');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,11 +33,27 @@ const MyTickets = () => {
         setBookings(data.bookings || []);
       } catch (err) {
         setError(err.response?.data?.message || err.message || 'Failed to load tickets');
-      } finally {
+      } fontFinally: {
         setLoading(false);
       }
     };
     fetchMyTickets();
+  }, []);
+
+  // Correct syntax fix
+  useEffect(() => {
+    const fetchTickets = async () => {
+      setLoading(true);
+      try {
+        const data = await getMyBookings();
+        setBookings(data.bookings || []);
+      } catch (err) {
+        setError(err.response?.data?.message || err.message || 'Failed to load tickets');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTickets();
   }, []);
 
   const handleClick = (booking) => {
@@ -47,7 +62,6 @@ const MyTickets = () => {
     });
   };
 
-  // Helper to extract unified item details safely
   const getItemDetails = (booking) => {
     const item = (typeof booking?.itemId === 'object' && booking.itemId !== null)
       ? booking.itemId
@@ -73,7 +87,6 @@ const MyTickets = () => {
     return { item, type, title, image, location, dateVal };
   };
 
-  // Filter bookings based on activeTab and searchTerm
   const filteredBookings = bookings.filter((booking) => {
     const { title, location, type } = getItemDetails(booking);
     const matchesTab = activeTab === 'All' || type.toLowerCase() === activeTab.toLowerCase();
@@ -137,7 +150,6 @@ const MyTickets = () => {
     <div className="min-h-screen bg-[#EEEEEE] pt-24 pb-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto space-y-8">
         
-        {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#D4BEE4]/40 pb-6">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#9B7EBD]/15 text-[#4A1E6D] font-premium font-bold text-xs uppercase tracking-wider mb-2">
@@ -151,7 +163,6 @@ const MyTickets = () => {
             </p>
           </div>
 
-          {/* Quick Count Badge */}
           <div className="bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-[#D4BEE4]/60 shadow-sm flex items-center gap-3 self-start md:self-auto">
             <div className="w-9 h-9 rounded-xl bg-[#4A1E6D]/10 flex items-center justify-center text-[#4A1E6D] font-bold text-sm">
               {bookings.length}
@@ -163,10 +174,7 @@ const MyTickets = () => {
           </div>
         </div>
 
-        {/* Filter Controls Bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          
-          {/* Tabs */}
           <div className="flex items-center gap-1.5 p-1.5 bg-white/70 backdrop-blur-md rounded-2xl border border-[#D4BEE4]/60 w-full sm:w-auto overflow-x-auto">
             {['All', 'Event', 'Movie', 'Dining'].map((tab) => (
               <button
@@ -183,7 +191,6 @@ const MyTickets = () => {
             ))}
           </div>
 
-          {/* Search Input */}
           <div className="relative w-full sm:w-72">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9B7EBD]" />
             <input
@@ -191,12 +198,11 @@ const MyTickets = () => {
               placeholder="Search by title or code..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-white/80 border border-[#D4BEE4]/60 rounded-2xl font-premium text-xs text-[#4A1E6D] focus:outline-none focus:ring-2 focus:ring-[#9B7EBD]/30 focus:border-[#9B7EBD] transition-all"
+              className="w-full pl-10 pr-4 py-2.5 bg-white/80 border border-[#D4BEE4]/60 rounded-2xl font-premium text-xs text-[#4A1E6D] focus:outline-none focus:ring-2 focus:ring-[#9B7EBD]/30"
             />
           </div>
         </div>
 
-        {/* Loading State */}
         {loading && (
           <div className="py-20 text-center space-y-4">
             <Loader2 className="w-10 h-10 text-[#9B7EBD] animate-spin mx-auto" />
@@ -204,7 +210,6 @@ const MyTickets = () => {
           </div>
         )}
 
-        {/* Error State */}
         {!loading && error && (
           <div className="bg-rose-50 border border-rose-200 rounded-3xl p-8 text-center max-w-lg mx-auto space-y-3">
             <AlertCircle className="w-10 h-10 text-rose-500 mx-auto" />
@@ -213,7 +218,6 @@ const MyTickets = () => {
           </div>
         )}
 
-        {/* Empty State */}
         {!loading && !error && filteredBookings.length === 0 && (
           <div className="bg-white/60 backdrop-blur-md rounded-3xl border border-[#D4BEE4]/60 p-12 text-center max-w-md mx-auto space-y-4 my-8">
             <div className="w-16 h-16 bg-[#9B7EBD]/15 rounded-3xl flex items-center justify-center text-[#4A1E6D] mx-auto">
@@ -234,7 +238,6 @@ const MyTickets = () => {
           </div>
         )}
 
-        {/* Tickets Grid */}
         {!loading && !error && filteredBookings.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {filteredBookings.map((booking) => {
@@ -245,9 +248,8 @@ const MyTickets = () => {
                 <div
                   key={booking._id}
                   onClick={() => handleClick(booking)}
-                  className="group bg-white/70 backdrop-blur-md rounded-3xl border border-[#D4BEE4]/60 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer flex flex-col sm:flex-row relative"
+                  className="group bg-white/70 backdrop-blur-md rounded-3xl border border-[#D4BEE4]/60 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col sm:flex-row relative"
                 >
-                  {/* Left Side: Poster / Cover Image */}
                   <div className="sm:w-2/5 h-48 sm:h-auto relative overflow-hidden bg-slate-900 shrink-0">
                     {image ? (
                       <img
@@ -261,14 +263,11 @@ const MyTickets = () => {
                       </div>
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent sm:bg-gradient-to-r sm:from-transparent sm:to-black/30" />
-                    
-                    {/* Top Left Category Badge */}
                     <div className="absolute top-3 left-3">
                       {getTypeBadge(type)}
                     </div>
                   </div>
 
-                  {/* Right Side: Pass Info */}
                   <div className="sm:w-3/5 p-5 flex flex-col justify-between space-y-4">
                     <div className="space-y-2">
                       <div className="flex items-center justify-between gap-2">
@@ -304,7 +303,6 @@ const MyTickets = () => {
                       </div>
                     </div>
 
-                    {/* Footer Row */}
                     <div className="pt-3 border-t border-[#D4BEE4]/40 flex items-center justify-between">
                       <div className="text-xs font-premium">
                         <span className="text-[#4A1E6D]/60">Qty: </span>
@@ -319,7 +317,6 @@ const MyTickets = () => {
                     </div>
                   </div>
 
-                  {/* Decorative Ticket Cutout Notches */}
                   <div className="hidden sm:block absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[#EEEEEE] border border-[#D4BEE4]/60" />
                 </div>
               );
@@ -332,4 +329,4 @@ const MyTickets = () => {
   );
 };
 
-export default MyTickets;
+export default MyTicketsPage;

@@ -1,59 +1,58 @@
+import React from 'react';
 import { useSelector } from 'react-redux';
-import Navbar from './components/Navbar';
-import { Route ,Routes,useLocation } from 'react-router-dom';
-import AuthForm from './components/AuthForm';
-import Home from './pages/homepage';
-import HostEvent from './pages/hosteventpage';
-import HostEventForm from './components/hostEventForms/hostEventForm';
-import ExploreEvents from './pages/ExploreEvents';
-import EventDetails from './components/EventDetails';
-import Favourites from './pages/Favourites';
-import ManageEvents from './pages/manageHostEventPage';
-import Dining from './pages/Dining';
-import AddMovies from './components/addMovies/AddMovies';
-import Movie from './pages/Movie';
-import MovieDetails from './components/MovieDetails';
-import AddDiningPage from './pages/addDiningPage';
-import BookingPage from './pages/bookingPage';
-import MyTicketsPage from './pages/myTickets';
-import TicketDetails from './pages/ticketdetails';
+import { Route, Routes, useLocation } from 'react-router-dom';
+
+// Layout Components
+import Navbar from './components/common/Navbar';
+
+// Page Components
+import HomePage from './pages/HomePage';
+import ExploreEventsPage from './pages/ExploreEventsPage';
+import EventDetailPage from './pages/EventDetailPage';
+import HostEventPage from './pages/HostEventPage';
+import AddEventPage from './pages/AddEventPage';
+import ManageEventsPage from './pages/ManageEventsPage';
+import MoviesPage from './pages/MoviesPage';
+import MovieDetailPage from './pages/MovieDetailPage';
+import AddMoviePage from './pages/AddMoviePage';
+import DiningPage from './pages/DiningPage';
+import AddDiningPage from './pages/AddDiningPage';
+import FavouritesPage from './pages/FavouritesPage';
+import AuthPage from './pages/AuthPage';
+import ProfilePage from './pages/ProfilePage';
+import BookingPage from './pages/BookingPage';
+import MyTicketsPage from './pages/MyTicketsPage';
+import TicketDetailsPage from './pages/TicketDetailsPage';
+
 const App = () => {
-  const user=useSelector((state)=>state.auth.user);
-  const role=user?.role || 'attendee'
-  
-  
+  const user = useSelector((state) => state.auth.user);
+  const role = user?.role || 'attendee';
+
   const location = useLocation();
+  const hideNavbar = location.pathname === '/auth';
 
-  const hideNavbar = location.pathname === '/auth'; 
   return (
-    
     <div className="min-h-screen bg-brand-bg text-brand-dark">
-      
-     
-      {!hideNavbar &&(
-        <Navbar 
-        currentRole={role}
-      />
-      )}
-      
+      {!hideNavbar && <Navbar currentRole={role} />}
 
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/explore' element={<ExploreEvents />} />
-        <Route path='/host-event' element={<HostEvent />} />
-        <Route path='/add-event' element={<HostEventForm />} />
-        <Route path="/auth" element={<AuthForm />} />
-        <Route path="/saved" element={<Favourites />} />
-        <Route path='/manage' element={<ManageEvents/>}/>
-        <Route path="/event/:id" element={<EventDetails />} />
-        <Route path="/dining" element={<Dining />} />
-        <Route path='/add-dining' element={<AddDiningPage />} />
-        <Route path="/add-movies" element={<AddMovies />} />
-        <Route path="/movies" element={<Movie />} />
-        <Route path="/movie/:id" element={<MovieDetails />} />
+      <Routes> 
+        <Route path="/" element={<HomePage />} />
+        <Route path="/explore" element={<ExploreEventsPage />} />
+        <Route path="/event/:id" element={<EventDetailPage />} />
+        <Route path="/host-event" element={<HostEventPage />} />
+        <Route path="/add-event" element={<AddEventPage />} />
+        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/saved" element={<FavouritesPage />} />
+        <Route path="/manage" element={<ManageEventsPage />} />
+        <Route path="/dining" element={<DiningPage />} />
+        <Route path="/add-dining" element={<AddDiningPage />} />
+        <Route path="/movies" element={<MoviesPage />} />
+        <Route path="/movie/:id" element={<MovieDetailPage />} />
+        <Route path="/add-movies" element={<AddMoviePage />} />
         <Route path="/booking" element={<BookingPage />} />
         <Route path="/my-tickets" element={<MyTicketsPage />} />
-        <Route path="/booking/:id" element={<TicketDetails />} />
+        <Route path="/booking/:id" element={<TicketDetailsPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </div>
   );

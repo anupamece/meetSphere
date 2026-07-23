@@ -1,5 +1,5 @@
 import React from "react";
-import { CreditCard, ShieldCheck, ArrowLeft, ArrowRight } from "lucide-react";
+import { CreditCard, ShieldCheck, ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
 
 const StepPayment = ({
   paymentMethod,
@@ -18,6 +18,7 @@ const StepPayment = ({
   handlePaymentSubmit,
   canProceedStep3,
   totalAmount,
+  processingPayment,
 }) => {
   return (
     <div className="relative z-10 space-y-6">
@@ -166,7 +167,8 @@ const StepPayment = ({
       <div className="flex gap-3">
         <button
           onClick={handleBack}
-          className="flex-1 py-3.5 rounded-xl border border-[#D4BEE4]/60 bg-white/80 font-premium font-semibold text-[#4A1E6D] text-sm hover:bg-[#EEEEEE] transition-premium flex items-center justify-center gap-2 cursor-pointer"
+          disabled={processingPayment}
+          className="flex-1 py-3.5 rounded-xl border border-[#D4BEE4]/60 bg-white/80 font-premium font-semibold text-[#4A1E6D] text-sm hover:bg-[#EEEEEE] transition-premium flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
         >
           <ArrowLeft className="w-4 h-4" />
           Back
@@ -177,14 +179,16 @@ const StepPayment = ({
           className="flex-[2] gradient-brand text-white font-premium font-semibold py-3.5 rounded-xl hover:opacity-95 transition-premium shadow-md shadow-[#9B7EBD]/20 flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
         >
           {processingPayment ? (
-            <span className="flex items-center gap-2">
-              <Spinner className="w-4 h-4" />
-              Processing Your Payment securely...
-            </span>
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              Processing Payment...
+            </>
           ) : (
-            `Pay ₹${totalAmount}`
+            <>
+              Pay ₹{totalAmount}
+              <ArrowRight className="w-4 h-4" />
+            </>
           )}
-          <ArrowRight className="w-4 h-4" />
         </button>
       </div>
     </div>

@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { getEvents, isfav } from '../api/eventApi';
-import EventCard from '../components/EventCard';
-import LoadingSpinner from '../components/LoadingSpinner';
+import EventCard from '../components/events/EventCard';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
-const ExploreEvents = () => {
+const ExploreEventsPage = () => {
 	const [events, setEvents] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState('');
@@ -110,4 +110,4 @@ const ExploreEvents = () => {
 	);
 };
 
-export default ExploreEvents;
+export default ExploreEventsPage;

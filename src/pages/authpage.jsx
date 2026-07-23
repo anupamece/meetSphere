@@ -1,15 +1,12 @@
-import { useState } from "react"
+import React from 'react';
+import AuthForm from '../components/auth/AuthForm';
 
-
-const authPage = () => {
-
-    const [auth,setAuth]=useState("Login");
+const AuthPage = () => {
   return (
-    <>
-        <AuthForm defaultMode={auth} onSubmit={(data) => console.log(data)} />
-    </>
-    
-  )
-}
+    <div className="min-h-screen bg-brand-bg">
+      <AuthForm defaultMode="login" />
+    </div>
+  );
+};
 
-export default authPage;
+export default AuthPage;

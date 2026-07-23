@@ -1,7 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const getStoredUser = () => {
+  try {
+    return JSON.parse(localStorage.getItem('user')) || null;
+  } catch {
+    localStorage.removeItem('user');
+    return null;
+  }
+};
+
 const initialState = {
-  user:JSON.parse(localStorage.getItem('user')) || null,
+  user: getStoredUser(),
   token: localStorage.getItem('token') || null,
   isLoggedIn: !!localStorage.getItem('token'),
   loading: false,
@@ -21,6 +30,8 @@ const authSlice = createSlice({
       state.user=action.payload.user;
       state.token=action.payload.token;
       state.isLoggedIn = true;
+      localStorage.setItem('user', JSON.stringify(action.payload.user));
+      localStorage.setItem('token', action.payload.token);
     },
     loginFailure: (state, action) => {
       state.loading=false;

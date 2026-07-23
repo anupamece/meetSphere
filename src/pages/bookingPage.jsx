@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { useSearchParams, useNavigate ,useLocation} from "react-router-dom";
+import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import { eventDetails } from "../api/eventApi";
 import { getDiningById } from "../api/diningApi";
 import { movieDetails } from "../api/movieApi";
 import { initiateBooking, simulatePayment, confirmBooking } from "../api/bookingApi";
-import { ArrowLeft, Ticket, Loader2, Film, Sparkles, Utensils } from "lucide-react";
+import { ArrowLeft, Ticket, Loader2, Film, Sparkles, Utensils, ShieldCheck } from "lucide-react";
 
 import BookingStepIndicator from "../components/booking/BookingStepIndicator";
 import BookingSummaryCard from "../components/booking/BookingSummaryCard";
@@ -23,21 +23,16 @@ const BookingPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const passedQuantity=location.state?.quantity || 1;
+  const passedQuantity = location.state?.quantity || 1;
 
-
-  //booking loader
-  const [processingPayment,setProcessingPayment]=useState(false);
-  // ─── Wizard state ──────────────────────────────────
+  const [processingPayment, setProcessingPayment] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [quantity, setQuantity] = useState(passedQuantity);
 
-  // ─── Attendee form state ───────────────────────────
   const [attendeeName, setAttendeeName] = useState("");
   const [attendeeEmail, setAttendeeEmail] = useState("");
   const [attendeePhone, setAttendeePhone] = useState("");
 
-  // ─── Payment form state ────────────────────────────
   const [paymentMethod, setPaymentMethod] = useState("card");
   const [cardNumber, setCardNumber] = useState("");
   const [cardExpiry, setCardExpiry] = useState("");
@@ -46,7 +41,6 @@ const BookingPage = () => {
 
   const [paymentSuccess, setPaymentSuccess] = useState(false);
 
-  // ─── Fetch item details ────────────────────────────
   useEffect(() => {
     const fetchDetails = async () => {
       setLoading(true);
@@ -71,38 +65,6 @@ const BookingPage = () => {
     fetchDetails();
   }, [itemType, itemId]);
 
-  // ─── Payment Handler ───────────────────────────────
-  const handlePaymentSubmit = async () => {
-    setProcessingPayment(true);
-    setError(null);
-    try {
-      const data = await initiateBooking({
-        itemType,
-        itemId,
-        quantity,
-        paymentMethod,
-        attendeeName,
-        attendeeEmail,
-      });
-
-      const bookingId = data.booking._id;
-      const payment = await simulatePayment({
-        bookingId,
-        cardNumber,
-      });
-      if (payment.success) {
-        await confirmBooking(bookingId);
-        setPaymentSuccess(true);
-      }
-    } catch (error) {
-      console.error("Error occurred while processing payment:", error);
-      setError("Payment failed. Please try again.");
-    } finally {
-      setProcessingPayment(false);
-    }
-  };
-
-  // ─── Derived values ────────────────────────────────
   const price = item
     ? itemType === "Dining"
       ? item.price
@@ -122,7 +84,54 @@ const BookingPage = () => {
   const isFree = price === 0;
   const totalSteps = isFree ? 2 : 3;
 
-  // ─── Helpers ───────────────────────────────────────
+  const executePaymentFlow = async () => {
+    setProcessingPayment(true);
+    setError(null);
+    try {
+      const data = await initiateBooking({
+        itemType,
+        itemId,
+        quantity,
+        paymentMethod: isFree ? "card" : paymentMethod,
+        attendeeName,
+        attendeeEmail,
+      });
+
+      const bookingId = data.booking._id;
+
+      if (!isFree) {
+        const payment = await simulatePayment({
+          bookingId,
+          cardNumber,
+        });
+
+        if (payment.success) {
+          const confirmedData = await confirmBooking(bookingId);
+          setPaymentSuccess(true);
+          navigate(`/booking/${bookingId}`, {
+            state: { booking: confirmedData.booking || data.booking }
+          });
+        } else {
+          setError(payment.message || "Payment failed. Please try a different card.");
+        }
+      } else {
+        const payment = await simulatePayment({ bookingId, cardNumber: "1111" });
+        if (payment.success) {
+          const confirmedData = await confirmBooking(bookingId);
+          setPaymentSuccess(true);
+          navigate(`/booking/${bookingId}`, {
+            state: { booking: confirmedData.booking || data.booking }
+          });
+        }
+      }
+    } catch (err) {
+      console.error("Error occurred while processing payment:", err);
+      setError(err.response?.data?.message || "Booking failed. Please try again.");
+    } finally {
+      setProcessingPayment(false);
+    }
+  };
+
   const getItemImage = () => {
     if (!item) return null;
     if (itemType === "Movie") return item.poster;
@@ -176,7 +185,6 @@ const BookingPage = () => {
       : 0
     : 0;
 
-  // ─── Step navigation ───────────────────────────────
   const canProceedStep1 = quantity >= 1 && quantity <= availableTickets;
   const canProceedStep2 = attendeeName.trim() && attendeeEmail.trim();
   const canProceedStep3 =
@@ -195,7 +203,6 @@ const BookingPage = () => {
     if (currentStep > 1) setCurrentStep((s) => s - 1);
   };
 
-  // ─── Step labels ───────────────────────────────────
   const steps = isFree
     ? [
         { num: 1, label: "Select" },
@@ -210,7 +217,6 @@ const BookingPage = () => {
   const meta = getItemMeta();
   const itemImage = getItemImage();
 
-  // ─── Loading / Error states ────────────────────────
   if (loading) {
     return (
       <div className="min-h-screen bg-[#EEEEEE] flex items-center justify-center">
@@ -224,7 +230,7 @@ const BookingPage = () => {
     );
   }
 
-  if (error || !item) {
+  if (error && !processingPayment && !item) {
     return (
       <div className="min-h-screen bg-[#EEEEEE] flex items-center justify-center px-4">
         <div className="bg-white/70 backdrop-blur-md rounded-3xl border border-[#D4BEE4]/60 p-10 text-center max-w-md">
@@ -249,23 +255,54 @@ const BookingPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#EEEEEE] pt-14 pb-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#EEEEEE] pt-14 pb-12 px-4 sm:px-6 lg:px-8 relative">
+      
+      {processingPayment && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 backdrop-blur-md animate-fade-in">
+          <div className="bg-white/95 rounded-3xl border border-[#D4BEE4]/80 p-8 max-w-sm w-full text-center space-y-5 shadow-2xl">
+            <div className="w-16 h-16 rounded-3xl bg-[#9B7EBD]/15 flex items-center justify-center mx-auto text-[#4A1E6D]">
+              <Loader2 className="w-8 h-8 text-[#9B7EBD] animate-spin" />
+            </div>
+            <div className="space-y-1">
+              <h3 className="font-display text-xl font-bold text-[#4A1E6D]">
+                {isFree ? "Generating Free Pass..." : "Processing Payment..."}
+              </h3>
+              <p className="font-premium text-xs text-[#4A1E6D]/70 leading-relaxed">
+                {isFree
+                  ? "Reserving your tickets and issuing digital pass."
+                  : "Communicating securely with payment simulation gateway."}
+              </p>
+            </div>
+            <div className="w-full bg-[#EEEEEE] h-1.5 rounded-full overflow-hidden">
+              <div className="h-full gradient-brand animate-pulse" />
+            </div>
+            <div className="flex items-center justify-center gap-2 text-[#4A1E6D]/50 font-premium text-[11px]">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#9B7EBD]" />
+              <span>Please do not close or refresh this page</span>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-6xl mx-auto">
-        {/* ── Back button ──────────────────────────── */}
         <button
           onClick={() => navigate(-1)}
-          className="mb-4 inline-flex items-center gap-2 font-premium text-xs font-bold uppercase tracking-wider text-[#4A1E6D] hover:text-[#9B7EBD] bg-white/80 border border-[#D4BEE4]/60 px-4 py-2 rounded-xl transition-all duration-200 shadow-sm cursor-pointer"
+          disabled={processingPayment}
+          className="mb-4 inline-flex items-center gap-2 font-premium text-xs font-bold uppercase tracking-wider text-[#4A1E6D] hover:text-[#9B7EBD] bg-white/80 border border-[#D4BEE4]/60 px-4 py-2 rounded-xl transition-all duration-200 shadow-sm cursor-pointer disabled:opacity-50"
         >
           <ArrowLeft className="w-4 h-4" />
           Back
         </button>
 
-        {/* ── Step indicator ───────────────────────── */}
+        {error && (
+          <div className="mb-6 p-4 bg-rose-50 border border-rose-200 rounded-2xl text-rose-600 text-xs font-premium font-semibold text-center animate-fade-in">
+            {error}
+          </div>
+        )}
+
         <BookingStepIndicator steps={steps} currentStep={currentStep} />
 
-        {/* ── Main layout: sidebar + form ──────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* ─── LEFT: Item summary card (sticky) ───── */}
           <div className="lg:col-span-4">
             <BookingSummaryCard
               itemImage={itemImage}
@@ -281,13 +318,10 @@ const BookingPage = () => {
             />
           </div>
 
-          {/* ─── RIGHT: Step form area ──────────────── */}
           <div className="lg:col-span-8">
             <div className="bg-white/70 backdrop-blur-md rounded-3xl border border-[#D4BEE4]/60 p-6 sm:p-8 shadow-sm relative overflow-hidden">
-              {/* Ambient glow */}
               <div className="absolute top-0 right-0 w-36 h-36 bg-[#9B7EBD]/10 rounded-full blur-2xl pointer-events-none" />
 
-              {/* STEP 1: Select Quantity */}
               {currentStep === 1 && (
                 <StepSelectQuantity
                   itemType={itemType}
@@ -302,7 +336,6 @@ const BookingPage = () => {
                 />
               )}
 
-              {/* STEP 2: Attendee Details */}
               {currentStep === 2 && (
                 <StepAttendeeDetails
                   attendeeName={attendeeName}
@@ -313,12 +346,13 @@ const BookingPage = () => {
                   setAttendeePhone={setAttendeePhone}
                   handleBack={handleBack}
                   handleNext={handleNext}
+                  handlePaymentSubmit={executePaymentFlow}
                   canProceedStep2={canProceedStep2}
                   isFree={isFree}
+                  processingPayment={processingPayment}
                 />
               )}
 
-              {/* STEP 3: Payment */}
               {currentStep === 3 && !isFree && (
                 <StepPayment
                   paymentMethod={paymentMethod}
@@ -334,7 +368,7 @@ const BookingPage = () => {
                   formatCardNumber={formatCardNumber}
                   formatExpiry={formatExpiry}
                   handleBack={handleBack}
-                  handlePaymentSubmit={handlePaymentSubmit}
+                  handlePaymentSubmit={executePaymentFlow}
                   canProceedStep3={canProceedStep3}
                   totalAmount={totalAmount}
                   processingPayment={processingPayment}

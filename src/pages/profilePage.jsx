@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../redux/authSlice';
 import {
-  User, Mail, Shield, Ticket, CalendarDays, Settings,
-  Bell, CreditCard, HelpCircle, LogOut, ChevronRight, Star
+  User, Mail, Ticket, LogOut, ChevronRight, Star
 } from 'lucide-react';
 
 const ProfilePage = () => {
@@ -32,194 +31,81 @@ const ProfilePage = () => {
     );
   }
 
-  const profileActions = [
-    {
-      label: 'My Tickets',
-      desc: 'View and manage your booked tickets',
-      icon: <Ticket className="w-5 h-5" />,
-      href: '/tickets',
-      color: 'text-[#9B7EBD]',
-      bg: 'bg-[#D4BEE4]/25',
-    },
-    {
-      label: 'My Events',
-      desc: 'Events you have created or saved',
-      icon: <CalendarDays className="w-5 h-5" />,
-      href: '/manage',
-      color: 'text-[#4A1E6D]',
-      bg: 'bg-[#4A1E6D]/10',
-    },
-    {
-      label: 'Reviews & Ratings',
-      desc: 'Your event reviews and feedback',
-      icon: <Star className="w-5 h-5" />,
-      href: '#reviews',
-      color: 'text-amber-600',
-      bg: 'bg-amber-50',
-    },
-    {
-      label: 'Payment Methods',
-      desc: 'Manage cards and payment options',
-      icon: <CreditCard className="w-5 h-5" />,
-      href: '#payments',
-      color: 'text-emerald-600',
-      bg: 'bg-emerald-50',
-    },
-    {
-      label: 'Notifications',
-      desc: 'Event reminders and platform alerts',
-      icon: <Bell className="w-5 h-5" />,
-      href: '#notifications',
-      color: 'text-[#9B7EBD]',
-      bg: 'bg-[#D4BEE4]/25',
-    },
-    {
-      label: 'Account Settings',
-      desc: 'Update password, preferences, and privacy',
-      icon: <Settings className="w-5 h-5" />,
-      href: '#settings',
-      color: 'text-slate-600',
-      bg: 'bg-slate-100',
-    },
-    {
-      label: 'Help & Support',
-      desc: 'FAQs, contact support, and documentation',
-      icon: <HelpCircle className="w-5 h-5" />,
-      href: '#help',
-      color: 'text-sky-600',
-      bg: 'bg-sky-50',
-    },
-  ];
-
   const handleLogout = () => {
-    const confirm = window.confirm('Are you sure you want to log out?');
-    if (confirm) {
-      dispatch(logout());
-      navigate('/auth');
-    }
+    dispatch(logout());
+    navigate('/auth');
   };
 
-  return (
-    <div className="min-h-screen bg-brand-bg py-10 px-4">
-      <div className="max-w-2xl mx-auto space-y-8">
+  const isOrganizer = user.role === 'organizer';
 
-        {/* ─── Profile Header Card ─── */}
-        <div className="bg-white/60 backdrop-blur-sm rounded-3xl border border-brand-muted/60 shadow-sm overflow-hidden">
-          
-          {/* Gradient Banner */}
-          <div className="h-28 sm:h-32 gradient-brand relative">
-            {/* Decorative circles */}
-            <div className="absolute top-4 left-6 w-16 h-16 rounded-full bg-white/10 blur-lg"></div>
-            <div className="absolute bottom-2 right-8 w-24 h-24 rounded-full bg-white/10 blur-xl"></div>
+  return (
+    <div className="min-h-screen bg-[#EEEEEE] py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto space-y-8">
+        <div className="bg-white/70 backdrop-blur-md rounded-3xl border border-[#D4BEE4]/60 p-6 sm:p-8 shadow-sm flex flex-col sm:flex-row items-center gap-6">
+          <div className="relative">
+            <img
+              src="/default-avatar.png"
+              alt={user.name}
+              className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md"
+            />
+            <span className="absolute bottom-0 right-0 p-1.5 bg-emerald-500 rounded-full border-2 border-white" />
           </div>
 
-          {/* Avatar & Info */}
-          <div className="relative px-6 sm:px-8 pb-6">
-            {/* Centered Avatar (pulled up over banner) */}
-            <div className="flex justify-center -mt-14 sm:-mt-16">
-              <div className="relative">
-                {/* Outer glow ring */}
-                <div className="absolute -inset-1 rounded-full bg-linear-to-br from-primary to-[#4A1E6D] opacity-60 blur-sm"></div>
-                <img
-                  src="/default-avatar.png"
-                  alt="Profile"
-                  className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-4 border-white shadow-lg"
-                />
-                {/* Online indicator */}
-                <span className="absolute bottom-1 right-1 w-5 h-5 bg-emerald-400 border-[3px] border-white rounded-full"></span>
-              </div>
-            </div>
-
-            {/* User Details */}
-            <div className="text-center mt-4 space-y-1">
+          <div className="space-y-1 text-center sm:text-left flex-1">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
               <h1 className="font-display text-2xl sm:text-3xl font-bold text-[#4A1E6D]">
                 {user.name}
               </h1>
-              <div className="flex items-center justify-center gap-2 text-[#4A1E6D]/60">
-                <Mail className="w-3.5 h-3.5" />
-                <span className="font-premium text-sm">{user.email}</span>
-              </div>
-              <div className="pt-2">
-                <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold font-premium uppercase tracking-wider ${
-                  user.role === 'organizer'
-                    ? 'bg-[#4A1E6D]/10 text-[#4A1E6D] border border-[#4A1E6D]/20'
-                    : 'bg-brand-muted/40 text-primary border border-brand-muted'
-                }`}>
-                  <Shield className="w-3 h-3" />
-                  {user.role}
-                </span>
-              </div>
+              <span className={`self-center sm:self-auto px-3 py-0.5 rounded-full text-xs font-premium font-bold uppercase tracking-wider ${
+                isOrganizer ? 'bg-[#9B7EBD]/20 text-[#4A1E6D]' : 'bg-[#4A1E6D]/10 text-[#4A1E6D]'
+              }`}>
+                {user.role}
+              </span>
             </div>
-
-            {/* Quick Stats Row */}
-            <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-brand-muted/40">
-              <div className="text-center">
-                <p className="font-display text-2xl font-bold text-[#4A1E6D]">0</p>
-                <p className="font-premium text-xs text-[#4A1E6D]/55 mt-0.5">Events</p>
-              </div>
-              <div className="text-center">
-                <p className="font-display text-2xl font-bold text-[#4A1E6D]">0</p>
-                <p className="font-premium text-xs text-[#4A1E6D]/55 mt-0.5">Tickets</p>
-              </div>
-              <div className="text-center">
-                <p className="font-display text-2xl font-bold text-[#4A1E6D]">0</p>
-                <p className="font-premium text-xs text-[#4A1E6D]/55 mt-0.5">Reviews</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* ─── Profile Action Items ─── */}
-        <div className="bg-white/60 backdrop-blur-sm rounded-3xl border border-brand-muted/60 shadow-sm overflow-hidden">
-          <div className="px-6 sm:px-8 py-5 border-b border-brand-muted/40">
-            <h2 className="font-premium font-bold text-sm uppercase tracking-wider text-primary">
-              Account
-            </h2>
+            <p className="font-premium text-sm text-[#4A1E6D]/70 flex items-center justify-center sm:justify-start gap-1.5">
+              <Mail className="w-4 h-4 text-[#9B7EBD]" /> {user.email}
+            </p>
           </div>
 
-          <div className="divide-y divide-brand-muted/30">
-            {profileActions.map((action, idx) => (
-              <a
-                key={idx}
-                href={action.href}
-                className="flex items-center gap-4 px-6 sm:px-8 py-4 hover:bg-brand-muted/10 transition-all duration-200 group cursor-pointer"
-              >
-                {/* Icon Container */}
-                <div className={`p-2.5 rounded-xl ${action.bg} ${action.color} group-hover:scale-110 transition-transform duration-200`}>
-                  {action.icon}
-                </div>
-
-                {/* Label & Description */}
-                <div className="flex-1 min-w-0">
-                  <p className="font-premium font-semibold text-sm text-[#4A1E6D] group-hover:text-primary transition-colors duration-200">
-                    {action.label}
-                  </p>
-                  <p className="font-premium text-xs text-[#4A1E6D]/55 truncate">
-                    {action.desc}
-                  </p>
-                </div>
-
-                {/* Chevron Arrow */}
-                <ChevronRight className="w-4 h-4 text-brand-muted group-hover:text-primary group-hover:translate-x-1 transition-all duration-200" />
-              </a>
-            ))}
-          </div>
-        </div>
-
-        {/* ─── Logout Section ─── */}
-        <div className="bg-white/60 backdrop-blur-sm rounded-3xl border border-rose-200/60 shadow-sm overflow-hidden">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-4 px-6 sm:px-8 py-4 hover:bg-rose-50/50 transition-all duration-200 group cursor-pointer"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-rose-200 bg-rose-50 text-rose-600 font-premium font-semibold text-xs hover:bg-rose-100 transition-colors cursor-pointer"
           >
-            <div className="p-2.5 rounded-xl bg-rose-50 text-rose-500 group-hover:scale-110 transition-transform duration-200">
-              <LogOut className="w-5 h-5" />
+            <LogOut className="w-4 h-4" /> Logout
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <button
+            onClick={() => navigate('/my-tickets')}
+            className="bg-white/70 backdrop-blur-md rounded-2xl border border-[#D4BEE4]/60 p-5 flex items-center justify-between text-left hover:bg-white transition-all cursor-pointer shadow-sm group"
+          >
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-[#4A1E6D]/10 rounded-xl text-[#4A1E6D]">
+                <Ticket className="w-5 h-5 text-[#9B7EBD]" />
+              </div>
+              <div>
+                <h4 className="font-display font-bold text-sm text-[#4A1E6D]">My Tickets</h4>
+                <p className="font-premium text-xs text-[#4A1E6D]/60">View booked passes</p>
+              </div>
             </div>
-            <div className="flex-1 text-left">
-              <p className="font-premium font-semibold text-sm text-rose-600">Log Out</p>
-              <p className="font-premium text-xs text-rose-400">Sign out of your meetSphere account</p>
+            <ChevronRight className="w-4 h-4 text-[#4A1E6D]/40 group-hover:translate-x-1 transition-transform" />
+          </button>
+
+          <button
+            onClick={() => navigate('/saved')}
+            className="bg-white/70 backdrop-blur-md rounded-2xl border border-[#D4BEE4]/60 p-5 flex items-center justify-between text-left hover:bg-white transition-all cursor-pointer shadow-sm group"
+          >
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-[#4A1E6D]/10 rounded-xl text-[#4A1E6D]">
+                <Star className="w-5 h-5 text-[#9B7EBD]" />
+              </div>
+              <div>
+                <h4 className="font-display font-bold text-sm text-[#4A1E6D]">Saved Favorites</h4>
+                <p className="font-premium text-xs text-[#4A1E6D]/60">Bookmarked events</p>
+              </div>
             </div>
-            <ChevronRight className="w-4 h-4 text-rose-300 group-hover:text-rose-500 group-hover:translate-x-1 transition-all duration-200" />
+            <ChevronRight className="w-4 h-4 text-[#4A1E6D]/40 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
 

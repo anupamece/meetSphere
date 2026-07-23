@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { X, Ticket, Armchair, Sparkles } from 'lucide-react';
 
 const SeatSelectionModal = ({ movie, onClose }) => {
-  // Existing state & logic preserved 100% untouched
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [occupiedSeats, setOccupiedSeats] = useState(
     new Set(['S1-3', 'S1-4', 'G1-5', 'G2-2', 'G2-3', 'R-4']) // Sample occupied seats for visual realism
@@ -29,7 +28,6 @@ const SeatSelectionModal = ({ movie, onClose }) => {
     }
   };
 
-  // Calculate tier-based price accurately for displayed seats
   const calculateTotalPrice = () => {
     return selectedSeats.reduce((total, seat) => {
       if (seat.startsWith('R')) return total + reclinerTicketPrice;
@@ -56,12 +54,10 @@ const SeatSelectionModal = ({ movie, onClose }) => {
     onClose();
   };
 
-  // Tier grid configurations
+  // Tier grid configurations (Screen → Silver → Gold → Recliner)
   const silverRows = [
     { rowLabel: 'S1', seats: ['S1-1', 'S1-2', 'S1-3', 'S1-4', 'S1-5', 'S1-6', 'S1-7', 'S1-8', 'S1-9', 'S1-10', 'S1-11', 'S1-12'] },
     { rowLabel: 'S2', seats: ['S2-1', 'S2-2', 'S2-3', 'S2-4', 'S2-5', 'S2-6', 'S2-7', 'S2-8', 'S2-9', 'S2-10', 'S2-11', 'S2-12'] },
-    { rowLabel: 'S3', seats: ['S3-1', 'S3-2', 'S3-3', 'S3-4', 'S3-5', 'S3-6', 'S3-7', 'S3-8', 'S3-9', 'S3-10', 'S3-11', 'S3-12'] },
-    { rowLabel: 'S4', seats: ['S4-1', 'S4-2', 'S4-3', 'S4-4', 'S4-5', 'S4-6', 'S4-7', 'S4-8', 'S4-9', 'S4-10', 'S4-11', 'S4-12'] },
   ];
 
   const goldRows = [

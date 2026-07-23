@@ -7,7 +7,6 @@ import {
   CalendarDays,
   MapPin,
   User,
-  Mail,
   CreditCard,
   CheckCircle2,
   XCircle,
@@ -23,7 +22,7 @@ import {
   ShieldCheck
 } from 'lucide-react';
 
-const TicketDetails = () => {
+const TicketDetailsPage = () => {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
@@ -33,7 +32,6 @@ const TicketDetails = () => {
   const [error, setError] = useState(null);
   const [copied, setCopied] = useState(false);
 
-  // Cancellation state
   const [cancelling, setCancelling] = useState(false);
   const [cancelConfirmOpen, setCancelConfirmOpen] = useState(false);
   const [cancelMessage, setCancelMessage] = useState(null);
@@ -44,7 +42,6 @@ const TicketDetails = () => {
         setLoading(true);
         try {
           const data = await getBookingById(id);
-          // Backend returns data.booking and optional data.itemDetails
           const fetchedBooking = data.booking || {};
           if (data.itemDetails && !fetchedBooking.itemDetails) {
             fetchedBooking.itemDetails = data.itemDetails;
@@ -60,7 +57,6 @@ const TicketDetails = () => {
     }
   }, [id, booking]);
 
-  // Helper to extract unified item details safely
   const getItemDetails = () => {
     if (!booking) return {};
 
@@ -158,7 +154,6 @@ const TicketDetails = () => {
     <div className="min-h-screen bg-[#EEEEEE] pt-20 pb-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto space-y-6">
         
-        {/* Navigation & Actions Top Bar */}
         <div className="flex items-center justify-between gap-4 print:hidden">
           <button
             onClick={() => navigate('/my-tickets')}
@@ -175,7 +170,6 @@ const TicketDetails = () => {
           </button>
         </div>
 
-        {/* System Messages Banner */}
         {cancelMessage && (
           <div
             className={`p-4 rounded-2xl border font-premium text-xs font-semibold flex items-center gap-3 animate-fade-in ${
@@ -193,10 +187,8 @@ const TicketDetails = () => {
           </div>
         )}
 
-        {/* ─── DIGITAL TICKET PASS CARD ─── */}
         <div className="bg-white/80 backdrop-blur-md rounded-3xl border border-[#D4BEE4]/60 overflow-hidden shadow-xl relative">
           
-          {/* Top Hero Banner with Media Cover */}
           <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-slate-950">
             {image ? (
               <img
@@ -210,11 +202,9 @@ const TicketDetails = () => {
               </div>
             )}
 
-            {/* Gradient Overlays */}
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-transparent to-slate-950/80" />
 
-            {/* Top Badges */}
             <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-premium font-semibold">
                 {type === 'Movie' && <Film className="w-3.5 h-3.5 text-purple-300" />}
@@ -248,7 +238,6 @@ const TicketDetails = () => {
               </span>
             </div>
 
-            {/* Title & Pass ID Overlay */}
             <div className="absolute bottom-4 left-5 right-5 text-white space-y-1">
               <p className="text-xs font-premium text-slate-300 uppercase tracking-widest font-semibold">
                 meetSphere Verified Pass
@@ -259,10 +248,7 @@ const TicketDetails = () => {
             </div>
           </div>
 
-          {/* Ticket Body Content */}
           <div className="p-6 sm:p-8 space-y-6">
-            
-            {/* Booking Code Bar */}
             <div className="bg-[#9B7EBD]/10 border border-[#D4BEE4]/60 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <p className="text-[10px] font-premium font-bold uppercase tracking-widest text-[#4A1E6D]/60">
@@ -289,17 +275,13 @@ const TicketDetails = () => {
               </button>
             </div>
 
-            {/* Perforated Tear Line Divider */}
             <div className="relative py-2">
               <div className="border-b-2 border-dashed border-[#D4BEE4]" />
               <div className="absolute -left-10 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#EEEEEE] border border-[#D4BEE4]/60" />
               <div className="absolute -right-10 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#EEEEEE] border border-[#D4BEE4]/60" />
             </div>
 
-            {/* Pass Metadata Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              
-              {/* Date & Time */}
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded-2xl bg-[#4A1E6D]/10 flex items-center justify-center text-[#4A1E6D] shrink-0 mt-0.5">
                   <CalendarDays className="w-5 h-5 text-[#9B7EBD]" />
@@ -321,7 +303,6 @@ const TicketDetails = () => {
                 </div>
               </div>
 
-              {/* Location / Venue */}
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded-2xl bg-[#4A1E6D]/10 flex items-center justify-center text-[#4A1E6D] shrink-0 mt-0.5">
                   <MapPin className="w-5 h-5 text-[#9B7EBD]" />
@@ -336,7 +317,6 @@ const TicketDetails = () => {
                 </div>
               </div>
 
-              {/* Ticket Holder */}
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded-2xl bg-[#4A1E6D]/10 flex items-center justify-center text-[#4A1E6D] shrink-0 mt-0.5">
                   <User className="w-5 h-5 text-[#9B7EBD]" />
@@ -356,7 +336,6 @@ const TicketDetails = () => {
                 </div>
               </div>
 
-              {/* Pass Quantity & Type */}
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded-2xl bg-[#4A1E6D]/10 flex items-center justify-center text-[#4A1E6D] shrink-0 mt-0.5">
                   <Ticket className="w-5 h-5 text-[#9B7EBD]" />
@@ -370,10 +349,8 @@ const TicketDetails = () => {
                   </p>
                 </div>
               </div>
-
             </div>
 
-            {/* Payment Summary Box */}
             <div className="bg-white/60 border border-[#D4BEE4]/60 rounded-2xl p-4 space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-xs font-premium font-bold text-[#4A1E6D]/70 uppercase tracking-wider">
@@ -402,16 +379,13 @@ const TicketDetails = () => {
               </div>
             </div>
 
-            {/* Security Guarantee Footer */}
             <div className="flex items-center justify-center gap-2 pt-2 text-[#4A1E6D]/50 font-premium text-xs">
               <ShieldCheck className="w-4 h-4 text-[#9B7EBD]" />
               <span>Authentic meetSphere Digital Pass • Non-Transferable</span>
             </div>
-
           </div>
         </div>
 
-        {/* Cancellation Section (if booking is not already cancelled) */}
         {!isCancelled && (
           <div className="bg-white/70 backdrop-blur-md rounded-2xl border border-[#D4BEE4]/60 p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
@@ -432,7 +406,6 @@ const TicketDetails = () => {
 
       </div>
 
-      {/* Cancellation Confirmation Modal */}
       {cancelConfirmOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
           <div className="bg-white rounded-3xl border border-[#D4BEE4] p-6 max-w-md w-full shadow-2xl space-y-4">
@@ -477,4 +450,4 @@ const TicketDetails = () => {
   );
 };
 
-export default TicketDetails;
+export default TicketDetailsPage;
