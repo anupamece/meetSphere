@@ -23,13 +23,13 @@ const Navbar = ({ currentRole}) => {
     { label: 'Dining', href: '/dining' },
     { label: 'Movies', href: '/movies' },
     { label: 'Favorite Events', href: '/saved' },
-    { label: 'My Tickets', href: '/tickets' },
+    { label: 'My Tickets', href: '/my-tickets' },
   ];
 
   const organizerLinks = [
     { label: 'Overview', href: '/explore' },
     { label: 'Host Event', href: '/host-event' },
-    { label: 'Manage Events', href: '/manage' },
+    { label: 'My Listings', href: '/manage' },
     { label: 'Scan Tickets', href: '/scanner' }
   ];
 

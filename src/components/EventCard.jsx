@@ -1,139 +1,183 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { CalendarDays, MapPin, Users, Heart, Edit, Trash2, Tag } from 'lucide-react';
 
-const EventCard = ({ event, showActions = false, onDelete, onEdit }) => {
-  
-  const startLabel = event.startDateTime
-    ? new Date(event.startDateTime).toLocaleString(undefined, {
-        dateStyle: 'medium',
-        timeStyle: 'short',
+const EventCard = ({ event, showActions = false, onDelete, onEdit, isFavorite = false, onToggleFavorite }) => {
+  const navigate = useNavigate();
+
+  const formattedDate = event?.startDateTime
+    ? new Date(event.startDateTime).toLocaleDateString('en-IN', {
+        weekday: 'short',
+        day: 'numeric',
+        month: 'short',
+        hour: '2-digit',
+        minute: '2-digit',
       })
-    : 'TBD';
+    : 'Date TBD';
 
   const venueLabel = [event?.venue?.name, event?.venue?.city]
     .filter(Boolean)
-    .join(' • ');
+    .join(' • ') || 'Venue TBA';
 
-  const tags = Array.isArray(event.tags) ? event.tags : [];
-  
-  const eventStatus = (
-    Date.now() < new Date(event.startDateTime)) 
-    ? 'upcoming' : 
-    (Date.now() > new Date(event.endDateTime)) 
-    ? 'completed' : 
-    (Date.now() > new Date(event.startDateTime) && Date.now() < new Date(event.endDateTime))
-     ? 'live' :'no';
+  // Calculate Event Status
+  const now = Date.now();
+  const startTime = event?.startDateTime ? new Date(event.startDateTime).getTime() : 0;
+  const endTime = event?.endDateTime ? new Date(event.endDateTime).getTime() : 0;
+
+  const eventStatus =
+    now < startTime
+      ? 'UPCOMING'
+      : now > endTime
+      ? 'COMPLETED'
+      : startTime > 0 && now >= startTime && now <= endTime
+      ? 'LIVE NOW'
+      : 'UPCOMING';
+
+  const statusBadgeBg =
+    eventStatus === 'LIVE NOW'
+      ? 'bg-emerald-500 text-white'
+      : eventStatus === 'COMPLETED'
+      ? 'bg-slate-800/90 text-slate-300'
+      : 'bg-black/60 text-slate-200 border border-white/10';
+
+  const handleCardClick = () => {
+    if (event?._id) {
+      navigate(`/event/${event._id}`);
+    }
+  };
 
   return (
-    <article
-      className="group overflow-hidden rounded-3xl border border-brand-muted/60 bg-white/80 shadow-[0_18px_45px_-30px_rgba(74,30,109,0.45)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_60px_-35px_rgba(74,30,109,0.55)]"
+    <div
+      onClick={handleCardClick}
+      className="group relative w-full cursor-pointer overflow-hidden rounded-2xl bg-[#0f172a] border border-slate-800/60 shadow-md transition-all duration-300 hover:shadow-xl hover:shadow-black/40 hover:border-slate-700"
     >
-      <div className="relative h-56 overflow-hidden bg-linear-to-br from-secondary via-primary to-brand-muted">
-        {event.coverImage ? (
+      {/* ─── Image Banner ─── */}
+      <div className="relative h-72 w-full overflow-hidden bg-slate-950">
+        {event?.coverImage ? (
           <img
             src={event.coverImage}
             alt={event.title}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+            loading="lazy"
           />
         ) : (
-          <div className="flex h-full w-full items-end p-6 text-white">
+          <div className="flex h-full w-full items-end p-6 bg-gradient-to-br from-[#4A1E6D] to-[#9B7EBD] text-white">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.3em] text-white/80">
-                {event.category || 'event'}
+              <p className="text-xs font-bold uppercase tracking-wider text-white/80">
+                {event?.category || 'Event'}
               </p>
-              <h2 className="mt-2 font-display text-3xl font-semibold leading-tight">
-                {event.title}
+              <h2 className="mt-1 font-display text-xl font-bold leading-tight text-white">
+                {event?.title}
               </h2>
             </div>
           </div>
         )}
 
-        <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold uppercase tracking-wide text-brand-dark shadow-sm">
+        {/* Soft Dark Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-transparent to-transparent opacity-85" />
+
+        {/* Status Badge */}
+        <span className={`absolute left-3 top-3 rounded-md px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider backdrop-blur-md shadow-sm ${statusBadgeBg}`}>
           {eventStatus}
         </span>
+
+        {/* Favorite Heart Button */}
+        {onToggleFavorite && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleFavorite(event._id);
+            }}
+            className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white transition hover:scale-110 cursor-pointer"
+          >
+            <Heart
+              className={`h-4 w-4 transition-colors ${
+                isFavorite ? 'fill-rose-500 text-rose-500' : 'text-slate-300 hover:text-rose-500'
+              }`}
+            />
+          </button>
+        )}
       </div>
 
-      <div className="space-y-4 p-6">
-        <div>
-          <p className="text-xs font-bold uppercase tracking-[0.28em] text-primary">
-            {event.category || 'Event'}
-          </p>
-          <h2 className="mt-2 font-display text-2xl font-semibold text-brand-dark">
-            {event.title}
-          </h2>
-        </div>
+      {/* Category Strip */}
+      <div className="bg-[#4A1E6D]/80 px-4 py-1.5 text-xs font-bold text-white flex items-center gap-1.5 border-b border-slate-800/60 backdrop-blur-md">
+        <Tag size={12} className="text-[#9B7EBD]" />
+        <span className="capitalize tracking-wide">{event?.category || 'General Event'}</span>
+      </div>
 
-        <p className="line-clamp-3 text-sm leading-6 text-brand-dark/70">
-          {event.description}
+      {/* ─── Details Section ─── */}
+      <div className="p-4 bg-[#0f172a]">
+        
+        {/* Single Date & Time line without "When" */}
+        <p className="text-xs font-bold font-premium text-amber-400 tracking-wide">
+          {formattedDate}
         </p>
 
-        <div className="space-y-2 text-sm text-brand-dark/75">
-          <p>
-            <span className="font-semibold text-brand-dark">When:</span> {startLabel}
-          </p>
-          <p>
-            <span className="font-semibold text-brand-dark">Where:</span>{' '}
-            {venueLabel || 'Venue not set'}
-          </p>
-          <p>
-            <span className="font-semibold text-brand-dark">Attendees:</span>{' '}
-            {typeof event.attendeeCount === 'number' ? event.attendeeCount : 0}
-          </p>
+        {/* Event Title */}
+        <h3 className="mt-1 truncate text-base font-bold text-slate-100 transition-colors group-hover:text-[#9B7EBD] capitalize">
+          {event?.title}
+        </h3>
+
+        {/* Venue Location */}
+        <div className="mt-1 flex items-center gap-1 text-xs text-slate-400">
+          <MapPin size={12} className="text-[#9B7EBD] shrink-0" />
+          <span className="truncate">{venueLabel}</span>
         </div>
 
-        {tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 pt-1">
-            {tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full bg-brand-bg px-3 py-1 text-xs font-semibold text-brand-dark"
-              >
-                #{tag}
-              </span>
-            ))}
-          </div>
+        {/* Description Preview */}
+        {event?.description && (
+          <p className="mt-1.5 line-clamp-1 text-xs text-slate-400/80 leading-relaxed">
+            {event.description}
+          </p>
         )}
-       <div className="mt-4 flex justify-center ">
-       <Link 
-       to={`/event/${event._id}`}
-       >
-       Details</Link>
-       </div>
 
+        {/* Divider */}
+        <div className="my-3 border-t border-slate-800/50" />
+
+        {/* Footer info: Attendees & View Details → button styled like Dining Card */}
+        <div className="flex items-center justify-between text-xs text-slate-400">
+          <div className="flex items-center gap-1 font-medium text-slate-400">
+            <Users size={12} className="text-slate-500" />
+            <span>{typeof event?.attendeeCount === 'number' ? event.attendeeCount : 0} attendees</span>
+          </div>
+
+          <span className="text-[11px] text-[#9B7EBD] font-semibold group-hover:text-[#D4BEE4] transition-colors">
+            View Details →
+          </span>
+        </div>
+
+        {/* Host Dashboard Action Buttons */}
         {showActions && (
-          <div className="flex gap-3 pt-3 border-t border-brand-muted/40">
+          <div className="mt-3 pt-3 border-t border-slate-800/60 grid grid-cols-2 gap-2">
             <button
-              onClick={() => onEdit(event._id)}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-brand-muted bg-white text-sm font-semibold font-premium text-[#4A1E6D] hover:bg-brand-muted/20 hover:border-primary transition-all duration-200 cursor-pointer"
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onEdit && onEdit(event._id);
+              }}
+              className="flex items-center justify-center gap-1 px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 text-xs font-semibold text-slate-200 hover:bg-slate-700 hover:text-white transition cursor-pointer"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                />
-              </svg>
+              <Edit size={12} className="text-[#9B7EBD]" />
               Edit
             </button>
+
             <button
-              onClick={() => onDelete(event._id)}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-rose-200 bg-white text-sm font-semibold font-premium text-rose-600 hover:bg-rose-50 hover:border-rose-400 transition-all duration-200 cursor-pointer"
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete && onDelete(event._id);
+              }}
+              className="flex items-center justify-center gap-1 px-3 py-1.5 rounded-lg border border-rose-900/60 bg-rose-950/40 text-xs font-semibold text-rose-300 hover:bg-rose-900/50 hover:text-white transition cursor-pointer"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                />
-              </svg>
+              <Trash2 size={12} className="text-rose-400" />
               Delete
             </button>
           </div>
         )}
+
       </div>
-    </article>
+    </div>
   );
 };
 
