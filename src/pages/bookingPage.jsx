@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate ,useLocation} from "react-router-dom";
 import { eventDetails } from "../api/eventApi";
 import { getDiningById } from "../api/diningApi";
 import { movieDetails } from "../api/movieApi";
@@ -15,6 +15,7 @@ import StepPayment from "../components/booking/StepPayment";
 const BookingPage = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const itemType = searchParams.get("type");
   const itemId = searchParams.get("id");
 
@@ -22,12 +23,14 @@ const BookingPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const passedQuantity=location.state?.quantity || 1;
+
 
   //booking loader
   const [processingPayment,setProcessingPayment]=useState(false);
   // ─── Wizard state ──────────────────────────────────
   const [currentStep, setCurrentStep] = useState(1);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(passedQuantity);
 
   // ─── Attendee form state ───────────────────────────
   const [attendeeName, setAttendeeName] = useState("");

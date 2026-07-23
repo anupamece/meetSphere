@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   Star,
@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { movieDetails } from "../api/movieApi";
 import LoadingSpinner from "../components/LoadingSpinner";
+import SeatSelectionModal from "./seatSelectionModal";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -18,6 +19,10 @@ const MovieDetails = () => {
 
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
+  
+  //seat selection modal logic and states
+  const [isSeatModalOpen, setIsSeatModalOpen] = useState(false);
+ 
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -65,8 +70,12 @@ const MovieDetails = () => {
     hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
 
   const handleBookTickets = () => {
-    navigate(`/movies/${movie._id}/book`);
+    // navigate(`/movies/${movie._id}/book`);
+    setIsSeatModalOpen((prev)=>!prev);
   };
+  const handleCloseSeatModal = () => {
+    setIsSeatModalOpen(false);
+  }
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -161,8 +170,14 @@ const MovieDetails = () => {
                 <Ticket size={19} />
                 Book Tickets
               </button>
-
+              <span>starting from ₹{movie.ticketPrice} onwards</span>
             </div>
+            {isSeatModalOpen && (
+              <SeatSelectionModal 
+                movie={movie}
+                onClose={handleCloseSeatModal}
+              />
+            )};
 
           </div>
         </div>
