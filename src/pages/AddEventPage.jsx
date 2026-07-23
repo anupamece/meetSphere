@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createEvent } from '../api/eventApi';
-import LoadingSpinner from '../components/common/LoadingSpinner';
+import LoadingSpinner from '../components/common/LoadingSpinner.jsx';
 import { Calendar, ArrowLeft, Image, MapPin, Tag, Clock, FileText } from 'lucide-react';
 
 const AddEventPage = () => {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import EventCard from '../components/events/EventCard';
+import EventCard from '../components/events/EventCard.jsx';
 import { favEvents } from '../api/favApi';
-import LoadingSpinner from '../components/common/LoadingSpinner';
+import LoadingSpinner from '../components/common/LoadingSpinner.jsx';
 
 function FavouritesPage() {
   const [events, setEvents] = useState([]);

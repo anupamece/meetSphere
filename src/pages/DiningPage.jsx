@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getAllDining } from "../api/diningApi";
-import DiningCard from "../components/dining/DiningCard";
-import LoadingSpinner from "../components/common/LoadingSpinner";
-import Footer from "../components/common/Footer";
+import DiningCard from "../components/Dining/DiningCard.jsx";
+import LoadingSpinner from "../components/common/LoadingSpinner.jsx";
+import Footer from "../components/common/Footer.jsx";
 import { Search, Utensils } from "lucide-react";
 
 const DiningPage = () => {

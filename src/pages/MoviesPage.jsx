@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import MovieCard from '../components/movies/MovieCard';
+import MovieCard from '../components/movies/MovieCard.jsx';
 import { getMovies } from '../api/movieApi';
-import LoadingSpinner from '../components/common/LoadingSpinner';
+import LoadingSpinner from '../components/common/LoadingSpinner.jsx';
 
 function MoviesPage() {
   const [movies, setMovies] = useState([]);

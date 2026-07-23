@@ -3,26 +3,26 @@ import { useSelector } from 'react-redux';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
 // Layout Components
-import Navbar from './components/common/Navbar';
+import Navbar from './components/common/Navbar.jsx';
 
 // Page Components
-import HomePage from './pages/HomePage';
-import ExploreEventsPage from './pages/ExploreEventsPage';
-import EventDetailPage from './pages/EventDetailPage';
-import HostEventPage from './pages/HostEventPage';
-import AddEventPage from './pages/AddEventPage';
-import ManageEventsPage from './pages/ManageEventsPage';
-import MoviesPage from './pages/MoviesPage';
-import MovieDetailPage from './pages/MovieDetailPage';
-import AddMoviePage from './pages/AddMoviePage';
-import DiningPage from './pages/DiningPage';
-import AddDiningPage from './pages/AddDiningPage';
-import FavouritesPage from './pages/FavouritesPage';
-import AuthPage from './pages/AuthPage';
-import ProfilePage from './pages/ProfilePage';
-import BookingPage from './pages/BookingPage';
-import MyTicketsPage from './pages/MyTicketsPage';
-import TicketDetailsPage from './pages/TicketDetailsPage';
+import HomePage from './pages/HomePage.jsx';
+import ExploreEventsPage from './pages/ExploreEventsPage.jsx';
+import EventDetailPage from './pages/EventDetailPage.jsx';
+import HostEventPage from './pages/HostEventPage.jsx';
+import AddEventPage from './pages/AddEventPage.jsx';
+import ManageEventsPage from './pages/ManageEventsPage.jsx';
+import MoviesPage from './pages/MoviesPage.jsx';
+import MovieDetailPage from './pages/MovieDetailPage.jsx';
+import AddMoviePage from './pages/AddMoviePage.jsx';
+import DiningPage from './pages/DiningPage.jsx';
+import AddDiningPage from './pages/AddDiningPage.jsx';
+import FavouritesPage from './pages/FavouritesPage.jsx';
+import AuthPage from './pages/AuthPage.jsx';
+import ProfilePage from './pages/ProfilePage.jsx';
+import BookingPage from './pages/BookingPage.jsx';
+import MyTicketsPage from './pages/MyTicketsPage.jsx';
+import TicketDetailsPage from './pages/TicketDetailsPage.jsx';
 
 const App = () => {
   const user = useSelector((state) => state.auth.user);

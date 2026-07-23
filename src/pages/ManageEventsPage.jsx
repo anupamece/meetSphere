@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getOrganiserEvents, deleteEvent } from '../api/eventApi';
-import LoadingSpinner from '../components/common/LoadingSpinner';
-import EventCard from '../components/events/EventCard';
-import MovieCard from '../components/movies/MovieCard';
-import DiningCard from '../components/dining/DiningCard';
+import LoadingSpinner from '../components/common/LoadingSpinner.jsx';
+import EventCard from '../components/events/EventCard.jsx';
+import MovieCard from '../components/movies/MovieCard.jsx';
+import DiningCard from '../components/Dining/DiningCard.jsx';
 import { Calendar, Utensils, Film, Plus } from 'lucide-react';
 
 const ManageEventsPage = () => {

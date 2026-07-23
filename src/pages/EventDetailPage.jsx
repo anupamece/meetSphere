@@ -12,8 +12,8 @@ import {
   Share2,
 } from 'lucide-react';
 import { eventDetails } from '../api/eventApi';
-import LoadingSpinner from '../components/common/LoadingSpinner';
-import Footer from '../components/common/Footer';
+import LoadingSpinner from '../components/common/LoadingSpinner.jsx';
+import Footer from '../components/common/Footer.jsx';
 
 const EventDetailPage = () => {
   const { id } = useParams();

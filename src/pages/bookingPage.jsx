@@ -6,11 +6,11 @@ import { movieDetails } from "../api/movieApi";
 import { initiateBooking, simulatePayment, confirmBooking } from "../api/bookingApi";
 import { ArrowLeft, Ticket, Loader2, Film, Sparkles, Utensils, ShieldCheck } from "lucide-react";
 
-import BookingStepIndicator from "../components/booking/BookingStepIndicator";
-import BookingSummaryCard from "../components/booking/BookingSummaryCard";
-import StepSelectQuantity from "../components/booking/StepSelectQuantity";
-import StepAttendeeDetails from "../components/booking/StepAttendeeDetails";
-import StepPayment from "../components/booking/StepPayment";
+import BookingStepIndicator from "../components/booking/BookingStepIndicator.jsx";
+import BookingSummaryCard from "../components/booking/BookingSummaryCard.jsx";
+import StepSelectQuantity from "../components/booking/StepSelectQuantity.jsx";
+import StepAttendeeDetails from "../components/booking/StepAttendeeDetails.jsx";
+import StepPayment from "../components/booking/StepPayment.jsx";
 
 const BookingPage = () => {
   const [searchParams] = useSearchParams();

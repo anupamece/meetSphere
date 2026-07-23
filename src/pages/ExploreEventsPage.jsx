@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { getEvents, isfav } from '../api/eventApi';
-import EventCard from '../components/events/EventCard';
-import LoadingSpinner from '../components/common/LoadingSpinner';
+import EventCard from '../components/events/EventCard.jsx';
+import LoadingSpinner from '../components/common/LoadingSpinner.jsx';
 
 const ExploreEventsPage = () => {
 	const [events, setEvents] = useState([]);

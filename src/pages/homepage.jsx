@@ -1,10 +1,10 @@
 import React from 'react';
-import HeroSection from '../components/home/HeroSection';
-import FeaturesSection from '../components/home/FeaturesSection';
-import HowItWorksSection from '../components/home/HowItWorksSection';
-import ServicesSection from '../components/home/ServicesSection';
-import SecuritySection from '../components/home/SecuritySection';
-import Footer from '../components/common/Footer';
+import HeroSection from '../components/home/HeroSection.jsx';
+import FeaturesSection from '../components/home/FeaturesSection.jsx';
+import HowItWorksSection from '../components/home/HowItWorksSection.jsx';
+import ServicesSection from '../components/home/ServicesSection.jsx';
+import SecuritySection from '../components/home/SecuritySection.jsx';
+import Footer from '../components/common/Footer.jsx';
 
 const HomePage = () => {
   return (

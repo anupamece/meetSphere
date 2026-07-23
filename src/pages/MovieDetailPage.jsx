@@ -10,8 +10,8 @@ import {
   User,
 } from "lucide-react";
 import { movieDetails } from "../api/movieApi";
-import LoadingSpinner from "../components/common/LoadingSpinner";
-import SeatSelectionModal from "../components/movies/SeatSelectionModal";
+import LoadingSpinner from "../components/common/LoadingSpinner.jsx";
+import SeatSelectionModal from "../components/movies/SeatSelectionModal.jsx";
 
 const MovieDetailPage = () => {
   const { id } = useParams();
